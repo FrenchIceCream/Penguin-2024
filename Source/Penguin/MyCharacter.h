@@ -59,12 +59,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//Action mappings + axis mappings
-	// void MoveForward(float AxisVal);
-	// void MoveRight(float AxisVal);
-	// void SprintStart();
-	// void SprintEnd();
-
 	UCharAnimInstance* AnimInst;
 public:	
 	// Called every frame

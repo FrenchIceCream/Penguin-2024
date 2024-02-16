@@ -24,25 +24,35 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	bool bZoomingIn;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float MoveSpeed = 20.0f;
+	float MoveSpeed = 30.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float ZoomSpeed = 2.0f;
+	float ZoomSpeed = 3.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
 	float MinZoom = 400.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float MaxZoom = 500.0f;
+	float MaxZoom = 450.0f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
+	float RotateSpeed = 10.0f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
+	float CameraAngle = -40.0f;
 
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 	void ZoomIn();
 	void ZoomOut();
 	void Zoom(float DeltaTime);
+	void RotateLeft();
+	void RotateRight();
+	void EnableRotate();
+	void DisableRotate();
+	void RotateHorizontal(float AxisValue);
 
 private:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
@@ -55,5 +65,12 @@ private:
 	FVector TargetLocation;
 
 	UPROPERTY()
+	FRotator TargetRotation;
+
+	UPROPERTY()
 	float ZoomFactor;
+
+	bool bZoomingIn;
+
+	bool bRotate;
 };

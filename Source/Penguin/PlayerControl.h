@@ -13,5 +13,10 @@ UCLASS()
 class PENGUIN_API APlayerControl : public APlayerController
 {
 	GENERATED_BODY()
+
 	
+public:
+    APlayerControl();	
 };
+
+

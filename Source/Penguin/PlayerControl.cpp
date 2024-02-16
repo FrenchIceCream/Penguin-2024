@@ -3,3 +3,9 @@
 
 #include "PlayerControl.h"
 
+APlayerControl::APlayerControl()
+{
+    bShowMouseCursor = true;
+    bEnableClickEvents = true;
+    bEnableMouseOverEvents = true;
+};

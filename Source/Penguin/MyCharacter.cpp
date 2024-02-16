@@ -66,43 +66,4 @@ void AMyCharacter::Tick(float DeltaTime)
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	// PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AMyCharacter::MoveForward);
-	// PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AMyCharacter::MoveRight);
-	// PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AMyCharacter::AddControllerYawInput);
-	// PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AMyCharacter::AddControllerPitchInput);
-	// PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Pressed, this, &AMyCharacter::SprintStart);
-	// PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Released, this, &AMyCharacter::SprintEnd);
 }
-
-// void AMyCharacter::MoveForward(float AxisVal)
-// {
-// 	const FRotator Rotation = Controller->GetControlRotation();
-// 	const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-// 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-// 	AddMovementInput(Direction, AxisVal);
-// }
-
-
-// void AMyCharacter::MoveRight(float AxisVal)
-// {
-// 	const FRotator Rotation = Controller->GetControlRotation();
-// 	const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-// 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-// 	AddMovementInput(Direction, AxisVal);
-// }
-
-// void AMyCharacter::SprintStart()
-// {
-// 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-// 	LeftFoot->SetStepTime(SprintSpeed);
-// 	RightFoot->SetStepTime(SprintSpeed);
-// }
-
-// void AMyCharacter::SprintEnd()
-// {
-// 	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
-// 	LeftFoot->SetStepTime(WalkingSpeed);
-// 	RightFoot->SetStepTime(WalkingSpeed);
-// }
