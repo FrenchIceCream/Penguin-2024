@@ -6,9 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "PlayerControl.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class PENGUIN_API APlayerControl : public APlayerController
 {
@@ -17,6 +14,9 @@ class PENGUIN_API APlayerControl : public APlayerController
 	
 public:
     APlayerControl();	
+
+protected:
+    virtual void BeginPlay() override;
 };
 
 
