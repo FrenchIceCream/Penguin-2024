@@ -15,6 +15,7 @@ void APlayerHUD::CreateHUD()
 
 APlayerHUD::APlayerHUD()
 {
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 void APlayerHUD::Tick(float DeltaTime)

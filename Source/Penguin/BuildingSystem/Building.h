@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/CapsuleComponent.h"
 #include "BuildingType.h"
 #include "Building.generated.h"
 

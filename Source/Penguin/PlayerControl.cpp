@@ -8,6 +8,8 @@ APlayerControl::APlayerControl()
     bShowMouseCursor = true;
     bEnableClickEvents = true;
     bEnableMouseOverEvents = true;
+
+    BuildingMode = CreateDefaultSubobject<UBuildingModeComponent>(TEXT("BuildingModeComponent"));
 }
 void APlayerControl::BeginPlay()
 {   
@@ -21,4 +23,9 @@ void APlayerControl::BeginPlay()
     if (APlayerHUD* Hud = Cast<APlayerHUD>(GetHUD()))
         Hud->CreateHUD();
 
+    if (BuildingMode != nullptr)
+    {
+        UE_LOG(LogTemp, Error, TEXT("Have Building Mode"));
+        BuildingMode->LoadBuildingData();
+    }
 };

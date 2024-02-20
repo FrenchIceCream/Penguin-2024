@@ -20,13 +20,16 @@ public:
 	void CreateHUD();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|UI")
-	TSubclassOf<UUserWidget> HudClass;
+	TSubclassOf<UUserWidget> GameMenuWidgetClass;
 
 	APlayerHUD();
 	virtual void Tick(float DeltaTime) override;
 protected:
 	UPROPERTY()
 	UHUDWidget* HUD;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|UI")
+	TSubclassOf<UUserWidget> HudClass;
 
 	virtual void BeginPlay();
 };
