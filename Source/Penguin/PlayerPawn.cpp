@@ -2,6 +2,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+#include "Components/InputComponent.h"
 #include "PlayerPawn.h"
 
 // Sets default values
@@ -26,7 +29,9 @@ void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();	
 
-	TargetRotation = SpringArmComp->GetRelativeRotation();
+	TargetRotation = SpringArmComp->GetRelativeRotation();if (APlayerController* PLayerController = Cast<APlayerController>(GetController()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PLayerController->GetLocalPlayer()))
+			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 }
 
 // Called every frame
@@ -43,33 +48,48 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("ZoomIn", IE_Pressed, this, &APlayerPawn::ZoomIn);
-	PlayerInputComponent->BindAction("ZoomIn", IE_Released, this, &APlayerPawn::ZoomOut);
-	
-	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerPawn::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerPawn::MoveRight);
-	PlayerInputComponent->BindAxis("RotateHorizontal", this, &APlayerPawn::RotateHorizontal);
+	if (APlayerController* PLayerController = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PLayerController->GetLocalPlayer()))
+		{
+			Subsystem->ClearAllMappings();
+			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		}
+	}
 
-	PlayerInputComponent->BindAction("Rotate", IE_Pressed, this, &APlayerPawn::EnableRotate);
-	PlayerInputComponent->BindAction("Rotate", IE_Released, this, &APlayerPawn::DisableRotate);
-	PlayerInputComponent->BindAction("RotateLeft", IE_Pressed, this, &APlayerPawn::RotateRight);
-	PlayerInputComponent->BindAction("RotateRight", IE_Pressed, this, &APlayerPawn::RotateLeft);
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Has Enhanced Input"));
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerPawn::Move);
+		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &APlayerPawn::Rotate);
+		EnhancedInputComponent->BindAction(RotateKeyboardAction, ETriggerEvent::Started, this, &APlayerPawn::RotateWithKeys);
+		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &APlayerPawn::SetZoom);
+	}
 }
 
-void APlayerPawn::MoveForward(float AxisValue)
+//==================================	Enhanced input	==================================//
+
+void APlayerPawn::Move(const FInputActionValue &Value)
 {
-	if (AxisValue == 0)
-		return;
-
-	TargetLocation = TargetLocation + SpringArmComp->GetForwardVector() * FVector(1, 1, 0) * AxisValue * MoveSpeed;
+	TargetLocation += SpringArmComp->GetTargetRotation().RotateVector(Value.Get<FVector>()) * FVector(1, 1, 0) * MoveSpeed;
 }
 
-void APlayerPawn::MoveRight(float AxisValue)
+void APlayerPawn::Rotate(const FInputActionValue &Value)
 {
-	if (AxisValue == 0)
-		return;
-	TargetLocation = TargetLocation + SpringArmComp->GetRightVector() * AxisValue * MoveSpeed;
+	TargetRotation = UKismetMathLibrary::ComposeRotators(TargetRotation, FRotator(0, Value.Get<float>() * RotateSpeed * 0.5, 0));
 }
+
+void APlayerPawn::RotateWithKeys(const FInputActionValue &Value)
+{
+	TargetRotation = UKismetMathLibrary::ComposeRotators(TargetRotation, FRotator(0, Value.Get<float>() * 45, 0));
+}
+
+void APlayerPawn::SetZoom(const FInputActionValue &Value)
+{
+	bZoomingIn = Value.Get<bool>();
+}
+
+//==================================	Input	==================================//
 
 void APlayerPawn::Zoom(float DeltaTime)
 {
@@ -82,43 +102,4 @@ void APlayerPawn::Zoom(float DeltaTime)
 
     CameraComp->FieldOfView = FMath::Lerp<float>(90.0f, 60.0f, ZoomFactor);
     SpringArmComp->TargetArmLength = FMath::Lerp<float>(MaxZoom, MinZoom, ZoomFactor);
-}
-
-void APlayerPawn::ZoomIn()
-{
-    bZoomingIn = true;
-}
-
-void APlayerPawn::ZoomOut()
-{
-    bZoomingIn = false;
-}
-
-void APlayerPawn::EnableRotate()
-{
-	bRotate = true;
-}
-
-void APlayerPawn::DisableRotate()
-{
-	bRotate = false;
-}
-
-void APlayerPawn::RotateLeft()
-{
-	TargetRotation = UKismetMathLibrary::ComposeRotators(TargetRotation, FRotator(0, -45, 0));
-}
-
-void APlayerPawn::RotateRight()
-{
-	TargetRotation = UKismetMathLibrary::ComposeRotators(TargetRotation, FRotator(0, 45, 0));
-}
-
-void APlayerPawn::RotateHorizontal(float AxisValue)
-{
-	if (AxisValue == 0)
-	return;
-
-	if (bRotate)
-		TargetRotation = UKismetMathLibrary::ComposeRotators(TargetRotation, FRotator(0, AxisValue * RotateSpeed * 0.5, 0));
 }

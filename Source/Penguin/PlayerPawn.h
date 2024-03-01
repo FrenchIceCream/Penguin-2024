@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "InputActionValue.h"
 #include "PlayerPawn.generated.h"
+
+class UInputMappingContext;
+class UInputAction;
 
 UCLASS()
 class PENGUIN_API APlayerPawn : public APawn
@@ -43,16 +47,27 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
 	float CameraAngle = -40.0f;
 
-	void MoveForward(float AxisValue);
-	void MoveRight(float AxisValue);
-	void ZoomIn();
-	void ZoomOut();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputMappingContext * DefaultMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction * MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction * RotateAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction * RotateKeyboardAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction * ZoomAction;
+
+	void Move(const FInputActionValue& Value);
+	void Rotate(const FInputActionValue& Value);
+	void RotateWithKeys(const FInputActionValue& Value);
+	void SetZoom(const FInputActionValue& Value);
+
 	void Zoom(float DeltaTime);
-	void RotateLeft();
-	void RotateRight();
-	void EnableRotate();
-	void DisableRotate();
-	void RotateHorizontal(float AxisValue);
 
 private:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
@@ -71,6 +86,4 @@ private:
 	float ZoomFactor;
 
 	bool bZoomingIn;
-
-	bool bRotate;
 };
