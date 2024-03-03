@@ -31,7 +31,7 @@ public:
 	UImage* Image;
 
 protected:
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void OnPlaceBuildingItemSelected();
 
 	//это из IUserObjectListEntry

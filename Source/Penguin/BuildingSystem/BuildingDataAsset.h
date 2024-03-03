@@ -25,4 +25,19 @@ public:
 	FPrimaryAssetType DataType;
 
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override { return FPrimaryAssetId(DataType, GetFName()); }
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classes")
+	TSoftClassPtr<AActor> BuildingClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classes")
+	TSoftClassPtr<AActor> FinalBuildingClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Display")
+	TArray<TSoftObjectPtr<UStaticMesh>> BuildingMeshes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Display")
+	TSoftObjectPtr<UStaticMesh> FinalBuildingMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Materials")
+	TSoftClassPtr<UMaterialInstance> PlaceMaterial;
 };

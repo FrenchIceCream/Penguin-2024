@@ -6,17 +6,26 @@
 void UBuildingItemWidget::NativeOnInitialized()
 {
     if (PlaceBuildingButton)
+    {
+        //UE_LOG(LogTemp, Warning, TEXT("Has Placebuilding Button"));
         PlaceBuildingButton->Button->OnClicked.AddDynamic(this, &UBuildingItemWidget::OnPlaceBuildingItemSelected);
+    }
 
     verify ((PlayerController = Cast<APlayerControl>(UGameplayStatics::GetPlayerController(GetWorld(), 0))) != nullptr);
 
     BuildingMode = UBuildingModeComponent::FindBuildingModeComponent(PlayerController);
-    
 }
 
 void UBuildingItemWidget::OnPlaceBuildingItemSelected()
 {
-
+    UE_LOG(LogTemp, Warning, TEXT("Item Selected"));
+    if (!BuildingMode)
+    {
+        UE_LOG(LogTemp, Error, TEXT("No Building Mode"));
+        return;
+    }
+    
+    BuildingMode->EnterBuildPlacementMode(BuildingData);
 }
 
 void UBuildingItemWidget::NativeOnListItemObjectSet(UObject *ListItemObject)

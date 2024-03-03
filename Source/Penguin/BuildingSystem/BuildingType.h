@@ -20,3 +20,26 @@ enum class EBuildingType : uint8
     Warehouse       UMETA(DisplayName = "Warehouse"),
 
 };
+
+UENUM()
+enum class EBuildState : uint8
+{
+    NotBuilt  UMETA(DisplayName = "Not Built"),
+    InProgress  UMETA(DisplayName = "In Progress"),
+    Built  UMETA(DisplayName = "Built"),
+    Aborted  UMETA(DisplayName = "Aborted"),
+};
+
+USTRUCT()
+struct FWorldSelectableData
+{
+    GENERATED_BODY()
+public:
+
+    FWorldSelectableData(): Object(nullptr) {}
+
+    FWorldSelectableData(AActor * object): Object(object) {}
+
+    UPROPERTY()
+    AActor* Object;
+};

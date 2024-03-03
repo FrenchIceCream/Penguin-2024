@@ -9,6 +9,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class UBuildingModeComponent;
 
 UCLASS()
 class PENGUIN_API APlayerPawn : public APawn
@@ -46,9 +47,15 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
 	float CameraAngle = -40.0f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+	UBuildingModeComponent * BuildingModeComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputMappingContext * DefaultMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputMappingContext * BuildModeMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction * MoveAction;
@@ -62,12 +69,21 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction * ZoomAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction * BuildDeployAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction * BuildCancelAction;
+
+
 	void Move(const FInputActionValue& Value);
 	void Rotate(const FInputActionValue& Value);
 	void RotateWithKeys(const FInputActionValue& Value);
 	void SetZoom(const FInputActionValue& Value);
-
 	void Zoom(float DeltaTime);
+
+	void BuildDeploy(const FInputActionValue& Value);
+	void BuildCancel(const FInputActionValue& Value);
 
 private:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))

@@ -2,6 +2,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "BuildingSystem/BuildingModeComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
@@ -55,6 +56,7 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 			Subsystem->ClearAllMappings();
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+		BuildingModeComponent = UBuildingModeComponent::FindBuildingModeComponent(PLayerController);
 	}
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
@@ -64,6 +66,9 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &APlayerPawn::Rotate);
 		EnhancedInputComponent->BindAction(RotateKeyboardAction, ETriggerEvent::Started, this, &APlayerPawn::RotateWithKeys);
 		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &APlayerPawn::SetZoom);
+
+		EnhancedInputComponent->BindAction(BuildDeployAction, ETriggerEvent::Triggered, this, &APlayerPawn::BuildDeploy);
+		EnhancedInputComponent->BindAction(BuildCancelAction, ETriggerEvent::Triggered, this, &APlayerPawn::BuildCancel);
 	}
 }
 
@@ -102,4 +107,21 @@ void APlayerPawn::Zoom(float DeltaTime)
 
     CameraComp->FieldOfView = FMath::Lerp<float>(90.0f, 60.0f, ZoomFactor);
     SpringArmComp->TargetArmLength = FMath::Lerp<float>(MaxZoom, MinZoom, ZoomFactor);
+}
+
+
+void APlayerPawn::BuildDeploy(const FInputActionValue & Value)
+{
+	if (!BuildingModeComponent)
+		return;
+	
+	BuildingModeComponent->EnterBuildMode();
+}
+
+void APlayerPawn::BuildCancel(const FInputActionValue &Value)
+{
+	if (!BuildingModeComponent)
+		return;
+
+	BuildingModeComponent->ExitBuildMode();
 }

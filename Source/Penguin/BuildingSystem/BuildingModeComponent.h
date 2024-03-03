@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Building.h"
 #include "Engine/AssetManager.h"
 #include "BuildingModeComponent.generated.h"
 
@@ -11,6 +12,7 @@
 class APlayerControl;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBuildModeEnterDelegate);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PENGUIN_API UBuildingModeComponent : public UActorComponent
@@ -27,15 +29,26 @@ public:
 	FOnBuildModeEnterDelegate OnBuildModeEnterEvent;
 
 	void LoadBuildingData();
+	void EnterBuildMode();
+	void ExitBuildMode();
+	void EnterBuildPlacementMode(UBuildingDataAsset* BuildingDataAsset);
 
 	TArray<FPrimaryAssetId> GetBuildingData() const {return BuildingItemsData; };
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 protected:
 	virtual void BeginPlay() override;
+	void UpdatePlacementStatus();
 
 	UFUNCTION()
 	void OnBuildingDataLoaded(TArray<FPrimaryAssetId> BuildingAssetsIds);
+
+	UFUNCTION()
+	void PlaceBuilding(UBuildingDataAsset* BuildingDataAsset, const FTransform& Position);
+	void PlaceBuildingInWorld(UBuildingDataAsset* BuildingDataAsset, const FTransform& Position);
+
+	UFUNCTION()
+	void OnBuildComplete(const EBuildState NewBuildingState);
 
 	UPROPERTY()
 	UAssetManager* AssetManager;
@@ -45,4 +58,13 @@ protected:
 
 	UPROPERTY()
 	APlayerControl* PlayerController;
+
+	UPROPERTY()
+	UWorld* World;
+
+	UPROPERTY()
+	ABuilding* CurrentBuilding;
+
+	UPROPERTY()
+	bool IsPlacable = false;
 };

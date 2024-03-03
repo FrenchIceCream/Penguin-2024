@@ -11,6 +11,18 @@ APlayerControl::APlayerControl()
 
     BuildingMode = CreateDefaultSubobject<UBuildingModeComponent>(TEXT("BuildingModeComponent"));
 }
+FVector APlayerControl::GetMouseLocationOnTerrain() const
+{
+    FVector WorldLocation, WorldDirection;
+    DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
+    FHitResult OutHit;
+    if (GetWorld()->LineTraceSingleByChannel(OutHit, WorldLocation, WorldLocation + WorldDirection * 10000, ECollisionChannel::ECC_WorldStatic))
+    {
+        if (OutHit.bBlockingHit)
+            return OutHit.Location;
+    }
+    return FVector::ZeroVector;
+}
 void APlayerControl::BeginPlay()
 {   
     Super::BeginPlay();
