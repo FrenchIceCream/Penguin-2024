@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "BuildingSystem/BuildingModeComponent.h"
 #include "PlayerControl.generated.h"
+
+class UBuildingModeComponent;
 
 UCLASS()
 class PENGUIN_API APlayerControl : public APlayerController

@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
+
 #include "GenericButtonWidget.generated.h"
 
 UCLASS()

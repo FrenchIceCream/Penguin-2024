@@ -1,7 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Kismet/GameplayStatics.h"
 #include "BuildingItemWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "GenericButtonWidget.h"
+#include "Components/Image.h"
+#include "Components/TextBlock.h"
+#include "../PlayerControl.h"
+#include "../BuildingSystem/BuildingDataAsset.h"
+#include "../BuildingSystem/BuildingModeComponent.h"
 
 void UBuildingItemWidget::NativeOnInitialized()
 {

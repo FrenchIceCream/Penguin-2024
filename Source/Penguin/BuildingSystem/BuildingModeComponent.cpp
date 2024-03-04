@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "BuildingModeComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "../PlayerControl.h"
 #include "../Framework/PengGameState.h"
 #include "BuildingBase.h"
-#include "BuildingModeComponent.h"
 
 // Sets default values for this component's properties
 UBuildingModeComponent::UBuildingModeComponent()

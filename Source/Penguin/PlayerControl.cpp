@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "UI/PlayerHUD.h"
 #include "PlayerControl.h"
+#include "UI/PlayerHUD.h"
+#include "BuildingSystem/BuildingModeComponent.h"
 
 APlayerControl::APlayerControl()
 {

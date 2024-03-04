@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "FootComp.h"
 
 #include "LegManager.generated.h"
 
 class AMyCharacter;
+class UFootComp;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PENGUIN_API ULegManager : public UActorComponent

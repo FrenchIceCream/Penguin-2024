@@ -2,6 +2,8 @@
 
 
 #include "GameMenuWidget.h"
+#include "GenericButtonWidget.h"
+#include "BuildMenuWidget.h"
 
 void UGameMenuWidget::NativeOnInitialized()
 {

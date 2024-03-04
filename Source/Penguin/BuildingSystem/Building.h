@@ -6,10 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "BuildingType.h"
 #include "Engine/AssetManager.h"
-#include "BuildingDataAsset.h"
-#include "Components/BoxComponent.h"
 #include "Engine/EngineTypes.h"
 #include "Building.generated.h"
+
+class UBuildingDataAsset;
+class UBoxComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBuildingBuiltEvent, const EBuildState, BuildingState);
 

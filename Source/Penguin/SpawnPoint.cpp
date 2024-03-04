@@ -2,6 +2,8 @@
 
 #include "SpawnPoint.h"
 #include "Kismet/GameplayStatics.h"
+#include "PlayerControl.h"
+#include "UI/GenericButtonWidget.h"
 
 // Sets default values
 ASpawnPoint::ASpawnPoint()

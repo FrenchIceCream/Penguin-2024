@@ -3,10 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/GenericButtonWidget.h"
-#include "PlayerControl.h"
 #include "GameFramework/Actor.h"
 #include "SpawnPoint.generated.h"
+
+class APlayerControl;
+class UGenericButtonWidget;
 
 UCLASS()
 class PENGUIN_API ASpawnPoint : public AActor

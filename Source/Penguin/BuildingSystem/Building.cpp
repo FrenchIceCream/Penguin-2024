@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Building.h"
+#include "Components/BoxComponent.h"
+#include "BuildingDataAsset.h"
 
 // Sets default values
 ABuilding::ABuilding()

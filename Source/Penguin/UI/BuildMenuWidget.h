@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/Border.h"
-#include "Engine/AssetManager.h"
 #include "Kismet/GameplayStatics.h"
-#include "Components/ListView.h"
-#include "../PlayerControl.h"
-#include "../BuildingSystem/BuildingModeComponent.h"
+
 #include "BuildMenuWidget.generated.h"
 
+class UListView;
+class APlayerControl;
+class UBuildingModeComponent;
+class UAssetManager;
+class UBorder;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBuildItemSelectedDelegate);
 /**

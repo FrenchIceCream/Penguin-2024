@@ -4,13 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "GenericButtonWidget.h"
-#include "BuildMenuWidget.h"
+
 #include "GameMenuWidget.generated.h"
 
-/**
- * 
- */
+class UBuildMenuWidget;
+class UGenericButtonWidget;
+
 UCLASS(Abstract)
 class PENGUIN_API UGameMenuWidget : public UUserWidget
 {

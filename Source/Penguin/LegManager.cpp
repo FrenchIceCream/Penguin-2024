@@ -3,6 +3,7 @@
 #include "LegManager.h"
 #include "MyCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "FootComp.h"
 
 
 // Sets default values for this component's properties

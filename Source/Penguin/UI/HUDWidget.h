@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "GameMenuWidget.h"
-#include "../PlayerControl.h"
+
 #include "HUDWidget.generated.h"
+
+class APlayerControl;
+class UGameMenuWidget;
 
 UCLASS()
 class PENGUIN_API UHUDWidget : public UUserWidget

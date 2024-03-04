@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "PlayerHUD.h"
 #include "HUDWidget.h"
+#include "PlayerHUD.h"
+#include "../PlayerControl.h"
+#include "GameMenuWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 void UHUDWidget::NativeOnInitialized()
 {

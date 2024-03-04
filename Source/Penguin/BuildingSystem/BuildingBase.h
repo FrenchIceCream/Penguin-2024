@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
 #include "BuildingDataAsset.h"
 #include "BuildingBase.generated.h"
+
+class UStaticMeshComponent;
 
 UCLASS()
 class PENGUIN_API ABuildingBase : public AActor

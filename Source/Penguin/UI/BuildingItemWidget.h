@@ -5,13 +5,15 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/IUserObjectListEntry.h"
-#include "GenericButtonWidget.h"
-#include "Components/Image.h"
-#include "Components/TextBlock.h"
-#include "../PlayerControl.h"
-#include "../BuildingSystem/BuildingDataAsset.h"
-#include "../BuildingSystem/BuildingModeComponent.h"
 #include "BuildingItemWidget.generated.h"
+
+class UGenericButtonWidget;
+class UImage;
+class UTextBlock;
+class UBuildingModeComponent;
+class UBuildingDataAsset;
+class APlayerControl;
+
 
 UCLASS()
 class PENGUIN_API UBuildingItemWidget : public UUserWidget, public IUserObjectListEntry

@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "LegManager.h"
-#include "FootComp.h"
 #include "CharAnimInstance.generated.h"
 /**
  * 
  */
 
 class AMyCharacter;
+class ULegManager;
+class UFootComp;
 
 UCLASS()
 class PENGUIN_API UCharAnimInstance : public UAnimInstance

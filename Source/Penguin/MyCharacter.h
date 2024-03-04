@@ -4,20 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/Controller.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
-#include "Blueprint/UserWidget.h"
-#include "FootComp.h" 
-#include "LegManager.h" 
-#include "CharAnimInstance.h"
 
 #include "MyCharacter.generated.h"
+
+class ULegManager;
+class UFootComp;
+class UCharAnimInstance;
+class UCameraComponent;
+class USpringArmComponent;
 
 UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter

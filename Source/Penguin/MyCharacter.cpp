@@ -6,6 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "LegManager.h"
+#include "FootComp.h"  
+#include "CharAnimInstance.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()

@@ -1,7 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "../BuildingSystem/BuildingDataAsset.h"
 #include "BuildMenuWidget.h"
+#include "Components/ListView.h"
+#include "Components/Border.h"
+#include "Engine/AssetManager.h"
+#include "../PlayerControl.h"
+#include "../BuildingSystem/BuildingDataAsset.h"
+#include "../BuildingSystem/BuildingModeComponent.h"
+
 
 void UBuildMenuWidget::NativeConstruct()
 {
