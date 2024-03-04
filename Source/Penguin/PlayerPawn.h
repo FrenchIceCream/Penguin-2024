@@ -31,16 +31,16 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float MoveSpeed = 30.0f;
+	float MoveSpeed = 300.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float ZoomSpeed = 3.0f;
+	float ZoomStep = 50.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float MinZoom = 400.0f;
+	float MinZoom = 300.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
-	float MaxZoom = 450.0f;
+	float MaxZoom = 2500.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings|Camera")
 	float RotateSpeed = 10.0f;
@@ -79,8 +79,7 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Rotate(const FInputActionValue& Value);
 	void RotateWithKeys(const FInputActionValue& Value);
-	void SetZoom(const FInputActionValue& Value);
-	void Zoom(float DeltaTime);
+	void Zoom(const FInputActionValue& Value);
 
 	void BuildDeploy(const FInputActionValue& Value);
 	void BuildCancel(const FInputActionValue& Value);
@@ -97,9 +96,4 @@ private:
 
 	UPROPERTY()
 	FRotator TargetRotation;
-
-	UPROPERTY()
-	float ZoomFactor;
-
-	bool bZoomingIn;
 };

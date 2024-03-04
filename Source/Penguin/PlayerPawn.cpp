@@ -21,7 +21,8 @@ APlayerPawn::APlayerPawn()
 	SpringArmComp->SetupAttachment(RootComponent);
 	CameraComp->SetupAttachment(SpringArmComp,USpringArmComponent::SocketName);
 
-	SpringArmComp->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 300.0f), FRotator(CameraAngle, 0.0f, 0.0f));
+	SpringArmComp->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 0.0f), FRotator(CameraAngle, 0.0f, 0.0f));
+	SpringArmComp->TargetArmLength = 1000.0f;
 	SpringArmComp->bDoCollisionTest = false;
 }
 
@@ -39,7 +40,7 @@ void APlayerPawn::BeginPlay()
 void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Zoom(DeltaTime);
+
 	SetActorLocation(UKismetMathLibrary::VInterpTo(GetActorLocation(), TargetLocation, DeltaTime, MoveSpeed));
 	SpringArmComp->SetRelativeRotation(UKismetMathLibrary::RInterpTo(SpringArmComp->GetRelativeRotation(), TargetRotation, DeltaTime, RotateSpeed));	
 }
@@ -65,7 +66,7 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerPawn::Move);
 		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &APlayerPawn::Rotate);
 		EnhancedInputComponent->BindAction(RotateKeyboardAction, ETriggerEvent::Started, this, &APlayerPawn::RotateWithKeys);
-		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &APlayerPawn::SetZoom);
+		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &APlayerPawn::Zoom);
 
 		EnhancedInputComponent->BindAction(BuildDeployAction, ETriggerEvent::Triggered, this, &APlayerPawn::BuildDeploy);
 		EnhancedInputComponent->BindAction(BuildCancelAction, ETriggerEvent::Triggered, this, &APlayerPawn::BuildCancel);
@@ -89,24 +90,15 @@ void APlayerPawn::RotateWithKeys(const FInputActionValue &Value)
 	TargetRotation = UKismetMathLibrary::ComposeRotators(TargetRotation, FRotator(0, Value.Get<float>() * 45, 0));
 }
 
-void APlayerPawn::SetZoom(const FInputActionValue &Value)
+void APlayerPawn::Zoom(const FInputActionValue& Value)
 {
-	bZoomingIn = Value.Get<bool>();
-}
-
-//==================================	Input	==================================//
-
-void APlayerPawn::Zoom(float DeltaTime)
-{
-	if (bZoomingIn)
-        ZoomFactor += DeltaTime / 0.35f;         //Zoom in over 0.35 a second
-    else
-        ZoomFactor -= DeltaTime / 0.25f;        //Zoom out over a quarter of a second
-
-    ZoomFactor = FMath::Clamp<float>(ZoomFactor, 0.0f, 1.0f);
-
-    CameraComp->FieldOfView = FMath::Lerp<float>(90.0f, 60.0f, ZoomFactor);
-    SpringArmComp->TargetArmLength = FMath::Lerp<float>(MaxZoom, MinZoom, ZoomFactor);
+	SpringArmComp->TargetArmLength += Value.Get<float>() * ZoomStep;
+	//UE_LOG(LogTemp, Warning, TEXT("Zoom: %f"), SpringArmComp->TargetArmLength);
+	
+	if (SpringArmComp->TargetArmLength < MinZoom)
+		SpringArmComp->TargetArmLength = MinZoom;
+	else if (SpringArmComp->TargetArmLength > MaxZoom)
+		SpringArmComp->TargetArmLength = MaxZoom;
 }
 
 
