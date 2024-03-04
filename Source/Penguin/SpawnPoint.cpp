@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "PlayerControl.h"
 #include "UI/GenericButtonWidget.h"
+#include "Framework/PengGameState.h"
 
 // Sets default values
 ASpawnPoint::ASpawnPoint()
@@ -23,7 +24,13 @@ void ASpawnPoint::ToggleSpawnWidget(UPrimitiveComponent* Target, FKey ButtonPres
 
 void ASpawnPoint::SpawnActor()
 {
-	GetWorld()->SpawnActor<AActor>(ActorToSpawn.LoadSynchronous(), GetActorLocation() + EntrancePos, GetActorRotation());
+	AActor * SpawnedActor = GetWorld()->SpawnActor<AActor>(ActorToSpawn.LoadSynchronous(), GetActorLocation() + EntrancePos, GetActorRotation()); 
+	if (APengGameState* GameState = Cast<APengGameState>(UGameplayStatics::GetGameState(GetWorld())))
+	{
+		GameState->AddPenguin(SpawnedActor);
+		//UE_LOG(LogTemp, Warning, TEXT("%d"), GameState->PlacedPenguins.Num());
+	}
+
 }
 
 // Called when the game starts or when spawned
