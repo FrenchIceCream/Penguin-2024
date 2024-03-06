@@ -53,7 +53,7 @@ public:
 	EBuildState BuildingState = EBuildState::NotBuilt;
 
 	UPROPERTY()
-	UMaterialInstance * OverlayMaterial;
+	UMaterialInstanceDynamic * OverlayMaterial;
 
 	void Init(UBuildingDataAsset * BuildingDataAsset, const EBuildState NewBuildingState = EBuildState::NotBuilt);
 

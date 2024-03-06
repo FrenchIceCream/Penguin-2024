@@ -39,5 +39,5 @@ public:
 	TSoftObjectPtr<UStaticMesh> FinalBuildingMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Materials")
-	TSoftClassPtr<UMaterialInstance> PlaceMaterial;
+	TSoftObjectPtr<UMaterialInstance> PlaceMaterial;
 };

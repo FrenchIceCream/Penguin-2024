@@ -47,7 +47,9 @@ void ABuilding::Init(UBuildingDataAsset *BuildingDataAsset, const EBuildState Ne
 
 void ABuilding::UpdateOverlayMaterial(const bool CanPlace) const
 {
-	//TODO
+	if (!OverlayMaterial)
+		return;
+	OverlayMaterial->SetScalarParameterValue(FName("Status"), CanPlace ? 1.0f : 0.0f);
 }
 
 void ABuilding::InitBuildPreview()
@@ -72,12 +74,13 @@ void ABuilding::StartBuilding()
 	//TODO таймер
 	GetWorldTimerManager().SetTimer(HandleBuildTimer, this, &ABuilding::UpdateBuildProgression, 2.0f, true, 2.0f);
 
-	//BuildingState = EBuildState::InProgress;	
+	BuildingState = EBuildState::InProgress;	
 }
 
 
 void ABuilding::EndBuilding()
 {
+	UE_LOG(LogTemp, Warning, TEXT("EndBuilding"));
 	GetWorldTimerManager().ClearTimer(HandleBuildTimer);
 
 	if (BuildingState != EBuildState::Built)
@@ -96,9 +99,9 @@ void ABuilding::UpdateCollider()
 
 	BoxCollider->SetBoxExtent(FVector
 	(
-		FMath::Max(FMath::RoundToInt(MaxMeshBounds.X + 10.f), 100.0f),
-		FMath::Max(FMath::RoundToInt(MaxMeshBounds.Y + 10.f), 100.0f),
-		FMath::Max(FMath::RoundToInt(MaxMeshBounds.Z + 10.f), 100.0f)
+		FMath::RoundToInt(MaxMeshBounds.X + 10.f),
+		FMath::RoundToInt(MaxMeshBounds.Y + 10.f),
+		FMath::RoundToInt(MaxMeshBounds.Z + 10.f)
 	), 
 	true);
 
@@ -113,13 +116,13 @@ void ABuilding::SetOverlayMaterial()
 	const FSoftObjectPath AssetPath = BuildingData->PlaceMaterial.ToSoftObjectPath();
 	if (UMaterialInstance* OverlayMat = Cast<UMaterialInstance>(AssetPath.TryLoad()))
 	{
-		OverlayMaterial = OverlayMat;
+		OverlayMaterial = UMaterialInstanceDynamic::Create(OverlayMat, this);
 		if (OverlayMaterial)
 		{
 			TArray<UStaticMeshComponent*> Components;
 			GetComponents<UStaticMeshComponent>(Components);
 			for (int i = 0; i < Components.Num(); i++)
-				Components[i]->SetMaterial(0, OverlayMaterial);
+				Components[i]->SetOverlayMaterial(OverlayMaterial);
 		}
 	}
 
@@ -127,14 +130,21 @@ void ABuilding::SetOverlayMaterial()
 
 void ABuilding::UpdateBuildProgressionMesh()
 {
+	//UE_LOG(LogTemp, Warning, TEXT("UpdateBuildProgressionMesh1"));
 	if (!BuildingData || !StaticMeshComp)
 		return;
 	
+	//UE_LOG(LogTemp, Warning, TEXT("UpdateBuildProgressionMes2"));
+
 	const int32 BuildMeshIndex = FMath::FloorToInt32(BuildProgression * BuildingData->BuildingMeshes.Num());
 	if (BuildingData->BuildingMeshes.IsValidIndex(BuildMeshIndex))
 	{
-		if (UStaticMesh* DisplayMesh = Cast<UStaticMesh>(BuildingData->BuildingMeshes[BuildMeshIndex].LoadSynchronous()))
+		//UE_LOG(LogTemp, Warning, TEXT("Valid Index"));
+		if (UStaticMesh* DisplayMesh = BuildingData->BuildingMeshes[BuildMeshIndex].LoadSynchronous())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Display Mesh"));
 			StaticMeshComp->SetStaticMesh(DisplayMesh);
+		}
 	}
 }
 
@@ -146,9 +156,11 @@ void ABuilding::UpdateBuildProgression()
 
 	BuildProgression += 1.0f / BuildingData->BuildingMeshes.Num();
 	
+	UE_LOG(LogTemp, Warning, TEXT("Number of Building Meshes: %d, Progression: %f"), BuildingData->BuildingMeshes.Num(), BuildProgression);
+
 	if (BuildProgression >= 1.0f)
 	{
-		if (UStaticMesh* DisplayMesh = Cast<UStaticMesh>(BuildingData->FinalBuildingMesh.LoadSynchronous()))
+		if (UStaticMesh* DisplayMesh = BuildingData->FinalBuildingMesh.LoadSynchronous())
 			StaticMeshComp->SetStaticMesh(DisplayMesh);
 		BuildingState = EBuildState::Built;
 		EndBuilding();

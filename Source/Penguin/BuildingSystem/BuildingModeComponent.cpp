@@ -89,10 +89,6 @@ void UBuildingModeComponent::EnterBuildMode()
 		PlaceBuilding(CurrentBuilding->GetBuildingData(), CurrentBuilding->GetTransform());
 		ExitBuildMode();
 	}
-	else
-	{
-		//TODO сменить цвет материала на красный
-	}
 }
 
 void UBuildingModeComponent::EnterBuildPlacementMode(UBuildingDataAsset *BuildingDataAsset)
