@@ -7,6 +7,7 @@
 #include "PlayerControl.generated.h"
 
 class UBuildingModeComponent;
+class UInputMappingContext;
 
 UCLASS()
 class PENGUIN_API APlayerControl : public APlayerController
@@ -19,9 +20,9 @@ public:
     APlayerControl();	
 
     FVector GetMouseLocationOnTerrain() const;
+
 protected:
     virtual void BeginPlay() override;
-
 };
 
 

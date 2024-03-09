@@ -10,6 +10,7 @@
 
 
 class APlayerControl;
+class APlayerPawn;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBuildModeEnterDelegate);
 
@@ -64,6 +65,9 @@ protected:
 
 	UPROPERTY()
 	ABuilding* CurrentBuilding;
+
+	UPROPERTY()
+	APlayerPawn* PlayerPawn;
 
 	UPROPERTY()
 	bool IsPlacable = false;

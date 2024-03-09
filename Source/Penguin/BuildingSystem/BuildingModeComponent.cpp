@@ -3,6 +3,7 @@
 #include "BuildingModeComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "../PlayerControl.h"
+#include "../PlayerPawn.h"
 #include "../Framework/PengGameState.h"
 #include "BuildingBase.h"
 
@@ -16,8 +17,9 @@ void UBuildingModeComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	verify ((PlayerController = Cast<APlayerControl>(UGameplayStatics::GetPlayerController(GetWorld(), 0))) != nullptr);
 	verify ((World = GetWorld()) != nullptr);
+	verify ((PlayerController = Cast<APlayerControl>(UGameplayStatics::GetPlayerController(World, 0))) != nullptr);
+	verify ((PlayerPawn = Cast<APlayerPawn>(UGameplayStatics::GetPlayerPawn(World, 0))) != nullptr);
 }
 
 void UBuildingModeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -87,7 +89,8 @@ void UBuildingModeComponent::EnterBuildMode()
 	if (IsPlacable)
 	{
 		PlaceBuilding(CurrentBuilding->GetBuildingData(), CurrentBuilding->GetTransform());
-		ExitBuildMode();
+		//TODO TODO TODO вот тут какой-то прикол  при раскомментировании прогрузка меша не работает
+		//ExitBuildMode();
 	}
 }
 
@@ -97,12 +100,14 @@ void UBuildingModeComponent::EnterBuildPlacementMode(UBuildingDataAsset *Buildin
 	if (!PlayerController || !BuildingDataAsset || !World)
 		return;
 
+	PlayerPawn->SetInputBuildingMode();
+
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(PlayerController->GetMouseLocationOnTerrain());
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	//UE_LOG(LogTemp, Warning, TEXT("EnterBuildPlacementMode"));
+	UE_LOG(LogTemp, Warning, TEXT("EnterBuildPlacementMode"));
 
 	CurrentBuilding = World->SpawnActor<ABuilding>(BuildingDataAsset->BuildingClass.LoadSynchronous(), SpawnTransform, SpawnParameters);
 	if (CurrentBuilding)
@@ -117,6 +122,7 @@ void UBuildingModeComponent::ExitBuildMode()
 		return;
 
 	//TODO AddInput
+	PlayerPawn->SetInputBuildingMode(false);
 
 	if (CurrentBuilding)
 		CurrentBuilding->Destroy();

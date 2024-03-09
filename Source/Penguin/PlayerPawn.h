@@ -26,6 +26,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
+	void SetInputDefault(bool Enabled = true) const;
+	UFUNCTION()
+	void SetInputBuildingMode(bool Enabled = true) const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -75,6 +80,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction * BuildCancelAction;
 
+	UFUNCTION()
+	void AddInputMapping(const UInputMappingContext* InputMapping, const int32 MappingPriority = 0) const;
+	UFUNCTION()
+	void RemoveInputMapping(const UInputMappingContext* InputMapping) const;
 
 	void Move(const FInputActionValue& Value);
 	void Rotate(const FInputActionValue& Value);

@@ -56,6 +56,7 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		{
 			Subsystem->ClearAllMappings();
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			//Subsystem->AddMappingContext(BuildModeMappingContext, 1);
 		}
 		BuildingModeComponent = UBuildingModeComponent::FindBuildingModeComponent(PLayerController);
 	}
@@ -68,12 +69,61 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		EnhancedInputComponent->BindAction(RotateKeyboardAction, ETriggerEvent::Started, this, &APlayerPawn::RotateWithKeys);
 		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &APlayerPawn::Zoom);
 
-		EnhancedInputComponent->BindAction(BuildDeployAction, ETriggerEvent::Triggered, this, &APlayerPawn::BuildDeploy);
+		EnhancedInputComponent->BindAction(BuildDeployAction, ETriggerEvent::Started, this, &APlayerPawn::BuildDeploy);
 		EnhancedInputComponent->BindAction(BuildCancelAction, ETriggerEvent::Triggered, this, &APlayerPawn::BuildCancel);
 	}
 }
 
 //==================================	Enhanced input	==================================//
+
+void APlayerPawn::AddInputMapping(const UInputMappingContext *InputMapping, const int32 MappingPriority) const
+{
+	if (APlayerController* PLayerController = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PLayerController->GetLocalPlayer()))
+		{
+			ensure(InputMapping);
+			if (!Subsystem->HasMappingContext(InputMapping))
+			{
+				Subsystem->AddMappingContext(InputMapping, MappingPriority);
+			}
+		}
+	}
+}
+
+void APlayerPawn::RemoveInputMapping(const UInputMappingContext *InputMapping) const
+{
+	if (APlayerController* PLayerController = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PLayerController->GetLocalPlayer()))
+		{
+			ensure(InputMapping);
+			Subsystem->RemoveMappingContext(InputMapping);
+		}
+	}
+}
+
+void APlayerPawn::SetInputDefault(bool Enabled) const
+{
+	if (Enabled)
+		AddInputMapping(DefaultMappingContext, 1);
+	else
+		RemoveInputMapping(DefaultMappingContext);
+}
+
+void APlayerPawn::SetInputBuildingMode(bool Enabled) const
+{
+	if (Enabled)
+	{
+		AddInputMapping(BuildModeMappingContext, 0);
+		SetInputDefault(!Enabled);
+	}
+	else
+	{
+		RemoveInputMapping(BuildModeMappingContext);
+		SetInputDefault();
+	}
+}
 
 void APlayerPawn::Move(const FInputActionValue &Value)
 {
