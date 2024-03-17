@@ -16,12 +16,18 @@ class UFootComp;
 class UCharAnimInstance;
 class UCameraComponent;
 class USpringArmComponent;
+class UAction;
+class UGoalPlanner;
 
 UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+	TSet<UAction*> Actions;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true")) 
+    UGoalPlanner* GoalPlanner;
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -53,15 +59,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Speed")
 	float SprintSpeed = 50;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	UCharAnimInstance* AnimInst;
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	TSet<UAction*> GetActions() {return Actions;}
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	UCharAnimInstance* AnimInst;
 };

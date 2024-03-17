@@ -21,6 +21,8 @@ public:
 	void AddPlacedObject(const FWorldSelectableData NewObject)	{PlacedObjects.Add(NewObject);}
 	void AddPenguin(AActor * NewObject)	{PlacedPenguins.Add(NewObject);}
 
+	TArray<FWorldSelectableData> GetPlacedObjects() {return PlacedObjects;}
+	TArray<AActor*> GetPlacedPenguins() {return PlacedPenguins;}
 protected:
 	virtual void BeginPlay() override;
 

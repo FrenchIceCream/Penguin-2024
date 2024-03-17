@@ -13,6 +13,8 @@
 #include "LegManager.h"
 #include "FootComp.h"  
 #include "CharAnimInstance.h"
+//#include "GOAP/Action.h"
+#include "GOAP/GoalPlanner.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -48,6 +50,8 @@ AMyCharacter::AMyCharacter()
 
 	LeftFoot->SetStepTime(WalkingSpeed);
 	RightFoot->SetStepTime(WalkingSpeed);
+
+	GoalPlanner = CreateDefaultSubobject<UGoalPlanner>(TEXT("GoalPlanner"));
 }
 
 // Called when the game starts or when spawned

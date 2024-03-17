@@ -46,7 +46,7 @@ void UFootComp::UpdateLeg()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("CompLoc: %f;%f;%f"), GetRelativeLocation().X, GetRelativeLocation().Y, GetRelativeLocation().Z);
 	TargetPosition = GetTargetLocation();
-	DrawDebugPoint(GetWorld(), TargetPosition, 5, FColor::Magenta, false, StepTime, 1);
+	//DrawDebugPoint(GetWorld(), TargetPosition, 5, FColor::Magenta, false, StepTime, 1);
 	Replant(TargetPosition);
 }
 
@@ -123,10 +123,10 @@ void UFootComp::TakeStep(const FVector& StartPos, const FVector& TargetPos)
 
 		//SetWorldLocation(FootPosition); //CHANGED
 		
-		if (this->GetName().Compare(FString("LeftFootComp")))
-			DrawDebugBox(GetWorld(), FootPosition, FVector(5,5,5), FColor::Yellow, false, 0.1, 0, 1);
-		else
-			DrawDebugBox(GetWorld(), FootPosition, FVector(5,5,5), FColor::Orange, false, 0.1, 0, 1);
+		// if (this->GetName().Compare(FString("LeftFootComp")))
+		// 	DrawDebugBox(GetWorld(), FootPosition, FVector(5,5,5), FColor::Yellow, false, 0.1, 0, 1);
+		// else
+		// 	DrawDebugBox(GetWorld(), FootPosition, FVector(5,5,5), FColor::Orange, false, 0.1, 0, 1);
 		
 		if (TimeSinceUnplanted >= StepTime)
 		{
