@@ -35,4 +35,6 @@ public:
     
     TMap<FString, bool> GetPreconditions() { return Preconditions; }
     TMap<FString, bool> GetEffects() { return Effects; }
+
+	void Reset();
 };
