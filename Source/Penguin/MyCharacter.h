@@ -25,9 +25,6 @@ class PENGUIN_API AMyCharacter : public ACharacter
 	GENERATED_BODY()
 
 	TSet<UAction*> Actions;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true")) 
-    UGoalPlanner* GoalPlanner;
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -38,6 +35,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		UCameraComponent* FollowCamera;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") 
+    	UGoalPlanner* GoalPlanner;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		ULegManager* LegManager;
 	
