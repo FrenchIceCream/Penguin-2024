@@ -78,3 +78,18 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+
+TMap<FString, bool> AMyCharacter::GetWorldState()
+{	
+	//TODO WORLD STATE
+	TMap<FString, bool> res = TMap<FString, bool>();
+    return res;
+}
+
+TMap<FString, bool> AMyCharacter::GetGoal()
+{
+	//TODO GOAL
+	TMap<FString, bool> res = TMap<FString, bool>();
+	res.Add("GetFood", Hunger < 20);
+    return res;
+}

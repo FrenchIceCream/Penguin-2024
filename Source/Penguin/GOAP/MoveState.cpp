@@ -5,7 +5,7 @@
 #include "FSM.h"
 #include "../MyCharacter.h"
 
-void UMoveState::PerformState(UFSM* fsm, AMyCharacter *agent)
+void UMoveState::PerformState(UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
     UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
 }

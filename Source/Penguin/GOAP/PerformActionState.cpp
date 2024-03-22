@@ -2,10 +2,9 @@
 
 
 #include "PerformActionState.h"
-#include "FSM.h"
-#include "../MyCharacter.h"
 
-void UPerformActionState::PerformState(UFSM* fsm, AMyCharacter *agent)
+
+void UPerformActionState::PerformState(UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
     UE_LOG(LogTemp, Warning, TEXT("PerformActionState: Performing state"));
 }

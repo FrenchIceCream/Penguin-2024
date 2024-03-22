@@ -8,6 +8,7 @@
 
 class UFSM;
 class AMyCharacter;
+class UGoalPlanner;
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
@@ -20,5 +21,5 @@ class PENGUIN_API IState
 {
 	GENERATED_BODY()
 public:
-	void PerformState(UFSM* fsm, AMyCharacter* agent);
+	virtual void PerformState(UFSM* fsm, UGoalPlanner* Planner, AMyCharacter* agent);
 };

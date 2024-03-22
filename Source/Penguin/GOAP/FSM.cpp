@@ -7,11 +7,11 @@ UFSM::UFSM()
 {
 }
 
-void UFSM::StateTick(AMyCharacter *Agent)
+void UFSM::StateTick(UGoalPlanner* Planner, AMyCharacter *Agent)
 {
 	if (!Stack.IsEmpty())
 	{
 		if (IState* state = Cast<IState>(Stack.Top()))
-			state->PerformState(this, Agent);
+			state->PerformState(this, Planner, Agent);
 	}
 }

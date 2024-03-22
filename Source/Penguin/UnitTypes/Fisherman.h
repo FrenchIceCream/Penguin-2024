@@ -19,4 +19,6 @@ public:
 	int GetFishCount() {return FishCount;}
 	void EmptyFishCount() {FishCount = 0;}
 	void CatchFish();	
+	virtual TMap<FString, bool> GetWorldState() override;
+	virtual TMap<FString, bool> GetGoal() override;
 };

@@ -5,7 +5,11 @@
 #include "FSM.h"
 #include "../MyCharacter.h"
 
-void UIdleState::PerformState(UFSM* fsm, AMyCharacter *agent)
+void UIdleState::PerformState(UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
-    UE_LOG(LogTemp, Warning, TEXT("IdleState: Performing state"));
+    //UE_LOG(LogTemp, Warning, TEXT("IdleState: Performing state"));
+    TMap<FString, bool> WorldState = agent->GetWorldState();
+    TMap<FString, bool> Goal = agent->GetGoal();
+
+    
 }

@@ -23,8 +23,6 @@ UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
-	TSet<UAction*> Actions;
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -67,9 +65,16 @@ public:
 
 	TSet<UAction*> GetActions() {return Actions;}
 
+	virtual TMap<FString, bool> GetWorldState();
+	virtual TMap<FString, bool> GetGoal();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UCharAnimInstance* AnimInst;
+
+	TSet<UAction*> Actions;
+
+	float Hunger = 100;
 };

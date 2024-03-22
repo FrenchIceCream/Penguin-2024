@@ -7,7 +7,7 @@
 #include "FSM.generated.h"
 
 class AMyCharacter;
-
+class UGoalPlanner;
 UCLASS()
 class PENGUIN_API UFSM : public UObject
 {
@@ -18,7 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	UFSM();
 
-	void StateTick(AMyCharacter* Agent);
+	void StateTick(UGoalPlanner* Planner, AMyCharacter* Agent);
 
 	void PushState(IState* state) {Stack.Push(state);}
 	void PopState() {Stack.Pop();}
