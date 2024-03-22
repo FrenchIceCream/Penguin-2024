@@ -16,5 +16,5 @@ class PENGUIN_API UIdleState : public UObject, public IState
 	GENERATED_BODY()
 	
 public:
-	void PerformState(UFSM* fsm, UGoalPlanner* Planner, AMyCharacter* agent) override;
+	void PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Planner, AMyCharacter* agent) override;
 };

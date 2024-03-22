@@ -27,6 +27,8 @@ public:
 	virtual bool CheckProceduralPrecondition(AMyCharacter* Agent) {UE_LOG(LogTemp, Error, TEXT("CheckProceduralPrecondition: must be overriden")); return false;};
 	virtual bool Perform(AMyCharacter* Agent) {UE_LOG(LogTemp, Error, TEXT("Perform: must be overriden")); return false;};
 	virtual bool RequiresInRange() {UE_LOG(LogTemp, Error, TEXT("RequiresInRange: must be overriden")); return false;};
+	virtual bool IsInRange() {UE_LOG(LogTemp, Error, TEXT("RequiresInRange: must be overriden")); return false;};
+	virtual bool IsDone() {UE_LOG(LogTemp, Error, TEXT("IsActionDone: must be overriden")); return false;}
 
 	void AddPrecondition(FString key, bool value) { Preconditions.Add(key, value);}
     void RemovePrecondition(FString key) { Preconditions.Remove(key); }
@@ -35,6 +37,6 @@ public:
     
     TMap<FString, bool> GetPreconditions() { return Preconditions; }
     TMap<FString, bool> GetEffects() { return Effects; }
-
+	
 	void Reset();
 };

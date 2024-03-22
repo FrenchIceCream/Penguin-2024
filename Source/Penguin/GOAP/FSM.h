@@ -8,6 +8,8 @@
 
 class AMyCharacter;
 class UGoalPlanner;
+class UGoapAgent;
+
 UCLASS()
 class PENGUIN_API UFSM : public UObject
 {
@@ -18,7 +20,7 @@ public:
 	// Sets default values for this actor's properties
 	UFSM();
 
-	void StateTick(UGoalPlanner* Planner, AMyCharacter* Agent);
+	void StateTick(UGoapAgent* GoapAgent, UGoalPlanner* Planner, AMyCharacter* Agent);
 
 	void PushState(IState* state) {Stack.Push(state);}
 	void PopState() {Stack.Pop();}

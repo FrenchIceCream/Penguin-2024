@@ -93,3 +93,10 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 	res.Add("GetFood", Hunger < 20);
     return res;
 }
+
+bool AMyCharacter::MoveToTarget(UAction *Action)
+{
+	//TODO
+	UE_LOG(LogTemp, Error, TEXT("MoveToTarget in AMyCharacter: Not implemented"));
+    return false;
+}

@@ -23,7 +23,7 @@ UGoapAgent::UGoapAgent()
 void UGoapAgent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	FSM->StateTick(Planner, Agent);	
+	FSM->StateTick(this, Planner, Agent);	
 }
 
 // Called when the game starts

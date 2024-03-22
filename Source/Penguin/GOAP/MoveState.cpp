@@ -4,8 +4,26 @@
 #include "MoveState.h"
 #include "FSM.h"
 #include "../MyCharacter.h"
+#include "Action.h"
+#include "GoapAgent.h"
+#include "FSM.h"
+#include "GoalPlanner.h"
+#include "IdleState.h"
 
-void UMoveState::PerformState(UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
+void UMoveState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
-    UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
+    //UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
+
+    UAction *action = *GoapAgent->GetCurrentActions()->Peek();
+    if (action->RequiresInRange() && action->Target == nullptr)
+    {
+        UE_LOG(LogTemp, Error, TEXT("No Target for Action"));
+        fsm->PopState();
+        fsm->PopState();
+        fsm->PushState(NewObject<UIdleState>());
+        return;
+    }
+
+    if (agent->MoveToTarget(action))
+        fsm->PopState();
 }

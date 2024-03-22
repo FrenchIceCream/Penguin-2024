@@ -68,6 +68,8 @@ public:
 	virtual TMap<FString, bool> GetWorldState();
 	virtual TMap<FString, bool> GetGoal();
 
+	bool MoveToTarget(UAction* Action);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

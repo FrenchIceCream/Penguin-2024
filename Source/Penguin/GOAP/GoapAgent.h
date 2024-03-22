@@ -32,6 +32,10 @@ public:
 	void AddAction(UAction* Action) {AvailableActions.Add(Action);}
 	void RemoveAction(UAction* Action) {AvailableActions.Remove(Action);}
 
+	TSet<UAction*> GetAvailableActions() {return AvailableActions;}
+	TQueue<UAction *>* GetCurrentActions() {return CurrentActions;}
+	void SetCurrentActions(TQueue<UAction *>* actions) {CurrentActions = actions;}
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;		
