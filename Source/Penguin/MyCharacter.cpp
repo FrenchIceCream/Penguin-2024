@@ -10,11 +10,12 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "LegManager.h"
-#include "FootComp.h"  
-#include "CharAnimInstance.h"
+#include "Movement/LegManager.h"
+#include "Movement/FootComp.h"  
+#include "Movement/CharAnimInstance.h"
 //#include "GOAP/Action.h"
 #include "GOAP/GoalPlanner.h"
+#include "Movement/CharController.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -64,6 +65,8 @@ void AMyCharacter::BeginPlay()
 	if (!AnimInst)
 		UE_LOG(LogTemp, Error, TEXT("No AnimInst"));
 
+	PlayerAI = GetWorld()->SpawnActor<ACharController>(ACharController::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
+	PlayerAI->Possess(this);
 
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketTransform(RightSocketName).GetLocation().X, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Y, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Z);
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketLocation(LeftSocketName).X, GetMesh()->GetSocketLocation(LeftSocketName).Y, GetMesh()->GetSocketLocation(LeftSocketName).Z);
@@ -72,6 +75,7 @@ void AMyCharacter::BeginPlay()
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	PlayerAI->CheckIfAIWorks();
 }
 
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -97,6 +101,7 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 bool AMyCharacter::MoveToTarget(UAction *Action)
 {
 	//TODO
+	
 	UE_LOG(LogTemp, Error, TEXT("MoveToTarget in AMyCharacter: Not implemented"));
     return false;
 }

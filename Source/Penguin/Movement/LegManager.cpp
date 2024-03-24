@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LegManager.h"
-#include "MyCharacter.h"
+#include "../MyCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "FootComp.h"
 

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FootComp.h"
-#include "MyCharacter.h"
+#include "../MyCharacter.h"
 #include "LegManager.h"
 
 

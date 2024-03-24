@@ -18,6 +18,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UAction;
 class UGoalPlanner;
+class ACharController;
 
 UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter
@@ -79,4 +80,7 @@ protected:
 	TSet<UAction*> Actions;
 
 	float Hunger = 100;
+
+	UPROPERTY()
+	ACharController* PlayerAI;
 };

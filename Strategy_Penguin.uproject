@@ -12,7 +12,8 @@
 				"Engine",
 				"AnimGraph",
 				"UMG",
-				"CoreUObject"
+				"CoreUObject",
+				"AIModule"
 			]
 		}
 	],
