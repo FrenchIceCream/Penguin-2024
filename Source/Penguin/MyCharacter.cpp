@@ -100,8 +100,5 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 
 bool AMyCharacter::MoveToTarget(UAction *Action)
 {
-	//TODO
-	
-	UE_LOG(LogTemp, Error, TEXT("MoveToTarget in AMyCharacter: Not implemented"));
-    return false;
+	return PlayerAI->MoveToTarget(this, Action);
 }
