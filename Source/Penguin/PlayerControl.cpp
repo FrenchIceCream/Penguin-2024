@@ -28,7 +28,7 @@ void APlayerControl::BeginPlay()
 
     if (BuildingMode != nullptr)
     {
-        UE_LOG(LogTemp, Error, TEXT("Has Building Mode"));
+        //UE_LOG(LogTemp, Error, TEXT("Has Building Mode"));
         BuildingMode->LoadBuildingData();
     }
 };

@@ -12,7 +12,7 @@
 
 void UMoveState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
-    //UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
+    UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
 
     UAction *action = GoapAgent->GetCurrentActions()[0];
     if (action->RequiresInRange() && action->Target == nullptr)

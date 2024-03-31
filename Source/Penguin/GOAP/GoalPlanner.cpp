@@ -22,7 +22,7 @@ void UGoalPlanner::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 }
 
 
-bool UGoalPlanner::BuildGraph(FGoapNode* parent, TArray<FGoapNode*> leaves, TSet<UAction *> usableActions, TMap<FString, bool> goal)
+bool UGoalPlanner::BuildGraph(FGoapNode* parent, TArray<FGoapNode*>& leaves, TSet<UAction *> usableActions, TMap<FString, bool> goal)
 {
 	bool found = false;
 
@@ -34,6 +34,7 @@ bool UGoalPlanner::BuildGraph(FGoapNode* parent, TArray<FGoapNode*> leaves, TSet
 			FGoapNode* node = new FGoapNode(parent, parent->Cost + Action->ActionCost, currentState, Action);
 			if (InState(goal, currentState))
 			{
+				//UE_LOG(LogTemp, Warning, TEXT("Added leaves"));
 				leaves.Add(node);
 				found = true;
 			}
@@ -52,15 +53,13 @@ bool UGoalPlanner::BuildGraph(FGoapNode* parent, TArray<FGoapNode*> leaves, TSet
 
 bool UGoalPlanner::InState(TMap<FString, bool> test, TMap<FString, bool> state)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("InState: not implemented"));
-
 	bool allMatch = true;
 	for (auto pair : test)
 	{
 		bool match = false;
 		for (auto pair2 : state)
 		{
-			//TODO вот тут тоже подозрительно - как происходит сравнение пар?
+			//UE_LOG(LogTemp, Warning, TEXT("Your message: %s, %s, %d, %d"), *pair.Key, *pair2.Key, pair.Value, pair2.Value);
 			if (pair.Key == pair2.Key && pair.Value == pair2.Value)
 			{
 				match = true;
@@ -79,10 +78,9 @@ bool UGoalPlanner::InState(TMap<FString, bool> test, TMap<FString, bool> state)
 
 TMap<FString, bool> UGoalPlanner::PopulateState(TMap<FString, bool> currentState, TMap<FString, bool> stateChange)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("PopulateState: not implemented"));
 	TMap<FString, bool> state = TMap<FString, bool>();
 	for (auto pair : currentState)
-		state[pair.Key] = pair.Value;
+		state.Add(pair.Key, pair.Value);
 
 	for (auto pair : stateChange)
 	{
@@ -125,7 +123,10 @@ TArray<UAction *> UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction *
 	for (UAction* Action : AvailableActions)
 	{
 		if (Action->CheckProceduralPrecondition(Agent))
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Procedural Precondition met: %s"), *Action->GetName());
 			UsableActions.Add(Action);
+		}
 	}
 
 	TArray<FGoapNode*> Nodes = TArray<FGoapNode*>();
@@ -137,6 +138,7 @@ TArray<UAction *> UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction *
 		return TArray<UAction *>();
 	}
 
+	//UE_LOG(LogTemp, Warning, TEXT("Nodes: %d"), Nodes.Num());
 	FGoapNode* BestNode = nullptr;
 	for (FGoapNode* Node : Nodes)
 	{
@@ -153,9 +155,7 @@ TArray<UAction *> UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction *
 		node = node->Parent;
 	}
 
-	// TQueue<UAction *>* best_path = new TQueue<UAction *>();
-	// for (UAction* Action : res)
-	// 	best_path->Enqueue(Action);
 
+	//UE_LOG(LogTemp, Warning, TEXT("res: %d"), res.Num());
     return res;
 }

@@ -6,9 +6,6 @@
 #include "Action.h"
 #include "Action_Test.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class PENGUIN_API UAction_Test : public UAction
 {
@@ -16,16 +13,17 @@ class PENGUIN_API UAction_Test : public UAction
 
 	bool DoneTesing = false;
 
-	FTimerHandle TimerHandle;
 	int TimerCalls = 3;
 
-	void TestFunction();
+	FTimerHandle TimerHandle;
+	FTimerDelegate TimerDelegate;
+	UFUNCTION()
+	void TestFunction(AMyCharacter *Agent);
 public:
-
 	UAction_Test();
-
 	bool CheckProceduralPrecondition(AMyCharacter* Agent) override;
 	bool Perform(AMyCharacter* Agent) override;
+	void Reset() override;
 	
 	bool RequiresInRange() override {	return true;	}
 	bool IsDone() override {	return DoneTesing;	}

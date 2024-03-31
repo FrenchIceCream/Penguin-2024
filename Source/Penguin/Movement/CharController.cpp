@@ -8,8 +8,14 @@
 bool ACharController::MoveToTarget(APawn *Agent, UAction *Action)
 {
     MoveToLocation(Action->GetTargetLocation(), -1, false);
-    if (FVector::Distance(Agent->GetActorLocation(), Action->GetTargetLocation()) < 0.5)
+
+    //UE_LOG(LogTemp, Warning, TEXT("Distance: %f"), FVector::Distance(Agent->GetActorLocation(), Action->GetTargetLocation()));
+
+    if (FVector::Distance(Agent->GetActorLocation(), Action->GetTargetLocation()) < 100)
+    {
+        Action->SetInRange(true);
         return true;
+    }
 
     return false;
 }

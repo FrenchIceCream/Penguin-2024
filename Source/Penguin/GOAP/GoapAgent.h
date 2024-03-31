@@ -30,6 +30,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AddAction(UAction* Action) {AvailableActions.Add(Action);}
+	void PopAction() {CurrentActions.Pop();}
 	void RemoveAction(UAction* Action) {AvailableActions.Remove(Action);}
 
 	TSet<UAction*> GetAvailableActions() {return AvailableActions;}

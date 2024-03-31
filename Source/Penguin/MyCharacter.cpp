@@ -71,7 +71,7 @@ void AMyCharacter::BeginPlay()
 	PlayerAI = GetWorld()->SpawnActor<ACharController>(ACharController::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
 	PlayerAI->Possess(this);
 
-	Actions.Add(NewObject<UAction_Test>());
+	GoapAgent->AddAction(NewObject<UAction_Test>());
 
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketTransform(RightSocketName).GetLocation().X, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Y, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Z);
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketLocation(LeftSocketName).X, GetMesh()->GetSocketLocation(LeftSocketName).Y, GetMesh()->GetSocketLocation(LeftSocketName).Z);
@@ -103,10 +103,11 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 {
 	//TODO GOAL
 	TMap<FString, bool> res = TMap<FString, bool>();
-	res.Add("GetFood", Hunger < 20);
 
 	if (Testing)
 		res.Add("DoneTesting", true);
+	else
+		res.Add("GetFood", Hunger < 20);
 
     return res;
 }

@@ -13,7 +13,7 @@
 
 void UPerformActionState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
-    UE_LOG(LogTemp, Warning, TEXT("PerformActionState: Performing state"));
+    //UE_LOG(LogTemp, Warning, TEXT("PerformActionState: Performing state"));
     if (GoapAgent->GetCurrentActions().IsEmpty())
     {
         fsm->PopState();
@@ -25,8 +25,9 @@ void UPerformActionState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPl
     UAction* action = GoapAgent->GetCurrentActions()[0];
 
     if (action->IsDone())
-        GoapAgent->GetCurrentActions().Pop();
+        GoapAgent->PopAction();
 
+    //UE_LOG(LogTemp, Warning, TEXT("Current Actions number: %d"), GoapAgent->GetCurrentActions().Num());
     if (!GoapAgent->GetCurrentActions().IsEmpty())
     {
         action = GoapAgent->GetCurrentActions()[0];

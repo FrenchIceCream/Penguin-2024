@@ -28,7 +28,8 @@ public:
 	virtual bool Perform(AMyCharacter* Agent) {	UE_LOG(LogTemp, Error, TEXT("Perform: must be overriden")); return false;	}
 	virtual bool RequiresInRange() {	UE_LOG(LogTemp, Error, TEXT("RequiresInRange: must be overriden")); return false;	}
 	virtual bool IsDone() {	UE_LOG(LogTemp, Error, TEXT("IsActionDone: must be overriden")); return false;	}
-	
+	virtual void Reset() { UE_LOG(LogTemp, Error, TEXT("Reset: not implemented")); }
+
 	virtual FVector GetTargetLocation() { return Target->GetActorLocation(); }
 
 	void AddPrecondition(FString key, bool value) { Preconditions.Add(key, value); }
@@ -40,5 +41,5 @@ public:
     TMap<FString, bool> GetEffects() { return Effects; }
 	bool IsInRange() {	return InRange;	}
 
-	void Reset();
+	void SetInRange(bool value) { InRange = value; }
 };

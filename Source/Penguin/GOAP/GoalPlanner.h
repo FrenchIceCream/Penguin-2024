@@ -17,7 +17,7 @@ class PENGUIN_API UGoalPlanner : public UActorComponent
 
 	//TQueue<UAction*>* ActionSequence;
 
-	bool BuildGraph(FGoapNode* parent, TArray<FGoapNode*> leaves, TSet<UAction*> usableActions, TMap<FString, bool> goal);
+	bool BuildGraph(FGoapNode* parent, TArray<FGoapNode*>& leaves, TSet<UAction*> usableActions, TMap<FString, bool> goal);
 	bool InState(TMap<FString, bool> test, TMap<FString, bool> state);
 	TMap<FString, bool> PopulateState(TMap<FString, bool> currentState, TMap<FString, bool> stateChange);
 	TSet<UAction*> GetActionSubset(TSet<UAction*> actions, UAction* actionToRemove);
