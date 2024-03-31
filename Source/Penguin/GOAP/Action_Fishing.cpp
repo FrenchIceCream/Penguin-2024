@@ -7,8 +7,7 @@
 UAction_Fishing::UAction_Fishing()
 {
     AddEffect("HasFish", true);
-    TargetBuilding = nullptr;
-    ShouldBeInRange = true;
+    Target = nullptr;
 }
 
 //Check if we have an available building (fisherman hut)
@@ -21,10 +20,10 @@ bool UAction_Fishing::CheckProceduralPrecondition(AMyCharacter* Agent)
             ABuilding* Building = Cast<ABuilding>(Selectable.Object);
             if (Building->BuildingType == EBuildingType::FishermanHut)
             {
-                if (!TargetBuilding || FVector::Distance(Agent->GetActorLocation(), Building->GetActorLocation()) < FVector::Distance(Agent->GetActorLocation(), TargetBuilding->GetActorLocation()))
-                    TargetBuilding = Building;
+                if (!Target || FVector::Distance(Agent->GetActorLocation(), Building->GetActorLocation()) < FVector::Distance(Agent->GetActorLocation(), Target->GetActorLocation()))
+                    Target = Building;
             }
         }
     }
-    return TargetBuilding != nullptr;
+    return Target != nullptr;
 }

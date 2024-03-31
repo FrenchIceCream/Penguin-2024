@@ -14,7 +14,7 @@ class PENGUIN_API UAction_Fishing : public UAction
 	GENERATED_BODY()
 
 	//Fisherman Hut
-	ABuilding* TargetBuilding;
+	// ABuilding* TargetBuilding;
 public:
 	UAction_Fishing();
 

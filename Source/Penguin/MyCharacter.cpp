@@ -13,9 +13,11 @@
 #include "Movement/LegManager.h"
 #include "Movement/FootComp.h"  
 #include "Movement/CharAnimInstance.h"
-//#include "GOAP/Action.h"
 #include "GOAP/GoalPlanner.h"
+#include "GOAP/GoapAgent.h"
 #include "Movement/CharController.h"
+//=Actions=//
+#include "GOAP/Action_Test.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -53,6 +55,9 @@ AMyCharacter::AMyCharacter()
 	RightFoot->SetStepTime(WalkingSpeed);
 
 	GoalPlanner = CreateDefaultSubobject<UGoalPlanner>(TEXT("GoalPlanner"));
+	GoapAgent = CreateDefaultSubobject<UGoapAgent>(TEXT("GoapAgent"));
+
+	Actions.Add(NewObject<UAction_Test>());
 }
 
 // Called when the game starts or when spawned
@@ -75,7 +80,7 @@ void AMyCharacter::BeginPlay()
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	PlayerAI->CheckIfAIWorks();
+	//PlayerAI->CheckIfAIWorks();
 }
 
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -87,6 +92,10 @@ TMap<FString, bool> AMyCharacter::GetWorldState()
 {	
 	//TODO WORLD STATE
 	TMap<FString, bool> res = TMap<FString, bool>();
+
+	if (Testing)
+		res.Add("Testing", true);
+
     return res;
 }
 
@@ -95,6 +104,10 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 	//TODO GOAL
 	TMap<FString, bool> res = TMap<FString, bool>();
 	res.Add("GetFood", Hunger < 20);
+
+	if (Testing)
+		res.Add("DoneTesting", true);
+
     return res;
 }
 

@@ -19,6 +19,7 @@ class USpringArmComponent;
 class UAction;
 class UGoalPlanner;
 class ACharController;
+class UGoapAgent;
 
 UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter
@@ -36,6 +37,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") 
     	UGoalPlanner* GoalPlanner;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") 
+    	UGoapAgent* GoapAgent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		ULegManager* LegManager;
@@ -70,6 +74,9 @@ public:
 	virtual TMap<FString, bool> GetGoal();
 
 	bool MoveToTarget(UAction* Action);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GOAP")
+	bool Testing = false;
 
 protected:
 	// Called when the game starts or when spawned

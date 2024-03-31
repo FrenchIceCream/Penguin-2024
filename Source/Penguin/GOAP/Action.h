@@ -17,7 +17,7 @@ protected:
 	TMap<FString, bool> Preconditions;
 	TMap<FString, bool> Effects;
 
-	bool ShouldBeInRange = false;
+	bool InRange = false;
 public:
 	UAction();
 
@@ -27,7 +27,6 @@ public:
 	virtual bool CheckProceduralPrecondition(AMyCharacter* Agent) {	UE_LOG(LogTemp, Error, TEXT("CheckProceduralPrecondition: must be overriden")); return false;	}
 	virtual bool Perform(AMyCharacter* Agent) {	UE_LOG(LogTemp, Error, TEXT("Perform: must be overriden")); return false;	}
 	virtual bool RequiresInRange() {	UE_LOG(LogTemp, Error, TEXT("RequiresInRange: must be overriden")); return false;	}
-	virtual bool IsInRange() {	UE_LOG(LogTemp, Error, TEXT("RequiresInRange: must be overriden")); return false;	}
 	virtual bool IsDone() {	UE_LOG(LogTemp, Error, TEXT("IsActionDone: must be overriden")); return false;	}
 	
 	virtual FVector GetTargetLocation() { return Target->GetActorLocation(); }
@@ -39,7 +38,7 @@ public:
     
     TMap<FString, bool> GetPreconditions() { return Preconditions; }
     TMap<FString, bool> GetEffects() { return Effects; }
-	
+	bool IsInRange() {	return InRange;	}
 
 	void Reset();
 };
