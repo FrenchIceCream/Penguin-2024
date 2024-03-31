@@ -115,7 +115,7 @@ TSet<UAction *> UGoalPlanner::GetActionSubset(TSet<UAction *> actions, UAction *
 	return Subset;
 }
 
-TQueue<UAction *>* UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction *> AvailableActions, TMap<FString, bool> WorldState, TMap<FString, bool> Goal)
+TArray<UAction *> UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction *> AvailableActions, TMap<FString, bool> WorldState, TMap<FString, bool> Goal)
 {
 	for (UAction *Action : AvailableActions)
 		Action->Reset();
@@ -134,7 +134,7 @@ TQueue<UAction *>* UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction 
 	if (!BuildGraph(StartNode, Nodes, UsableActions, Goal))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Couldn't find a GOAP path!"));
-		return nullptr;
+		return TArray<UAction *>();
 	}
 
 	FGoapNode* BestNode = nullptr;
@@ -153,9 +153,9 @@ TQueue<UAction *>* UGoalPlanner::FindBestPath(AMyCharacter *Agent, TSet<UAction 
 		node = node->Parent;
 	}
 
-	TQueue<UAction *>* best_path = new TQueue<UAction *>();
-	for (UAction* Action : res)
-		best_path->Enqueue(Action);
+	// TQueue<UAction *>* best_path = new TQueue<UAction *>();
+	// for (UAction* Action : res)
+	// 	best_path->Enqueue(Action);
 
-    return best_path;
+    return res;
 }

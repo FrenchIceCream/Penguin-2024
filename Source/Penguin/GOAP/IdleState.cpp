@@ -12,21 +12,23 @@
 
 void UIdleState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
 {
-    //UE_LOG(LogTemp, Warning, TEXT("IdleState: Performing state"));
+    UE_LOG(LogTemp, Warning, TEXT("IdleState: Performing state"));
     TMap<FString, bool> WorldState = agent->GetWorldState();
     TMap<FString, bool> Goal = agent->GetGoal();
 
-    TQueue<UAction*>* path = Planner->FindBestPath(agent, GoapAgent->GetAvailableActions(), WorldState, Goal);
-    if (path)
+    TArray<UAction*> path = Planner->FindBestPath(agent, GoapAgent->GetAvailableActions(), WorldState, Goal);
+    if (!path.IsEmpty())
     {
         GoapAgent->SetCurrentActions(path);
 
         fsm->PopState();
-        fsm->PushState(NewObject<UPerformActionState>());
+        auto state = NewObject<UPerformActionState>();
+        fsm->PushState(state);
     }
     else
     {
         fsm->PopState();
-        fsm->PushState(NewObject<UIdleState>());
+        auto state = NewObject<UIdleState>();
+        fsm->PushState(state);
     }
 }

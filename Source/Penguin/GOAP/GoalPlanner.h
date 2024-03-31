@@ -27,7 +27,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	TQueue<UAction*>* FindBestPath(AMyCharacter* Agent, TSet<UAction*> AvailableActions, TMap<FString, bool> WorldState, TMap<FString, bool> Goal);
+	TArray<UAction*> FindBestPath(AMyCharacter* Agent, TSet<UAction*> AvailableActions, TMap<FString, bool> WorldState, TMap<FString, bool> Goal);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -58,13 +58,4 @@ struct FGoapNode
 		State = state;
 		Action = action;
 	}
-};
-
-template<>
-struct TStructOpsTypeTraits< TQueue<UAction*> > : public TStructOpsTypeTraitsBase2< TQueue<UAction*> >
-{
-   enum
-   {
-      WithCopy = false
-   };
 };

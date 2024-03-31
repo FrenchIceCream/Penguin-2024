@@ -14,13 +14,14 @@ void UMoveState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Pl
 {
     //UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
 
-    UAction *action = *GoapAgent->GetCurrentActions()->Peek();
+    UAction *action = GoapAgent->GetCurrentActions()[0];
     if (action->RequiresInRange() && action->Target == nullptr)
     {
         UE_LOG(LogTemp, Error, TEXT("No Target for Action"));
         fsm->PopState();
         fsm->PopState();
-        fsm->PushState(NewObject<UIdleState>());
+        auto state = NewObject<UIdleState>();
+        fsm->PushState(state);
         return;
     }
 

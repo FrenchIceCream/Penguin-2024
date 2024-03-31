@@ -56,8 +56,6 @@ AMyCharacter::AMyCharacter()
 
 	GoalPlanner = CreateDefaultSubobject<UGoalPlanner>(TEXT("GoalPlanner"));
 	GoapAgent = CreateDefaultSubobject<UGoapAgent>(TEXT("GoapAgent"));
-
-	Actions.Add(NewObject<UAction_Test>());
 }
 
 // Called when the game starts or when spawned
@@ -72,6 +70,8 @@ void AMyCharacter::BeginPlay()
 
 	PlayerAI = GetWorld()->SpawnActor<ACharController>(ACharController::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
 	PlayerAI->Possess(this);
+
+	Actions.Add(NewObject<UAction_Test>());
 
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketTransform(RightSocketName).GetLocation().X, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Y, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Z);
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketLocation(LeftSocketName).X, GetMesh()->GetSocketLocation(LeftSocketName).Y, GetMesh()->GetSocketLocation(LeftSocketName).Z);

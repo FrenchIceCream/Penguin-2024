@@ -17,12 +17,12 @@ class PENGUIN_API UGoapAgent : public UActorComponent
 	GENERATED_BODY()
 
 	TSet<UAction*> AvailableActions;
-	TQueue<UAction *>* CurrentActions;
+	TArray<UAction*> CurrentActions;
 	AMyCharacter* Agent;
 	UGoalPlanner* Planner;
 	UFSM* FSM;
 
-	bool HasActionPlan() {return !CurrentActions->IsEmpty();}
+	bool HasActionPlan() {return !CurrentActions.IsEmpty();}
 public:	
 	// Sets default values for this component's properties
 	UGoapAgent();
@@ -33,8 +33,8 @@ public:
 	void RemoveAction(UAction* Action) {AvailableActions.Remove(Action);}
 
 	TSet<UAction*> GetAvailableActions() {return AvailableActions;}
-	TQueue<UAction *>* GetCurrentActions() {return CurrentActions;}
-	void SetCurrentActions(TQueue<UAction *>* actions) {CurrentActions = actions;}
+	TArray<UAction*> GetCurrentActions() {return CurrentActions;}
+	void SetCurrentActions(TArray<UAction*> actions) {CurrentActions = actions;}
 
 protected:
 	// Called when the game starts

@@ -16,13 +16,13 @@ UGoapAgent::UGoapAgent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	AvailableActions = TSet<UAction*>();
-	CurrentActions = new TQueue<UAction*>();
-	FSM = NewObject<UFSM>();
+	CurrentActions = TArray<UAction*>();
 }
 
 void UGoapAgent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	//UE_LOG(LogTemp, Warning, TEXT("Ticking GoapAgent"));
 	FSM->StateTick(this, Planner, Agent);	
 }
 
@@ -36,4 +36,9 @@ void UGoapAgent::BeginPlay()
 	auto actions = Agent->GetActions();
 	for (auto action : actions)
 		AddAction(action);
+	
+	FSM = NewObject<UFSM>();
+
+	auto state = NewObject<UIdleState>();
+	FSM->PushState(state);
 }
