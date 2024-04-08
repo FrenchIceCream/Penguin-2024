@@ -13,6 +13,7 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PENGUIN_API UGoalPlanner : public UActorComponent
 {
 	GENERATED_BODY()
+	UPROPERTY()
 	TSet<UAction*> Actions;
 
 	//TQueue<UAction*>* ActionSequence;

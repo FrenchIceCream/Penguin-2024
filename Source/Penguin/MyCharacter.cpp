@@ -72,9 +72,10 @@ void AMyCharacter::BeginPlay()
 	PlayerAI->Possess(this);
 
 	GoapAgent->AddAction(NewObject<UAction_Test>());
-
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketTransform(RightSocketName).GetLocation().X, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Y, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Z);
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketLocation(LeftSocketName).X, GetMesh()->GetSocketLocation(LeftSocketName).Y, GetMesh()->GetSocketLocation(LeftSocketName).Z);
+
+	GetWorldTimerManager().SetTimer(HungerTimerHandle, this, &AMyCharacter::DecreaseHunger, 1, true);
 }
 
 void AMyCharacter::Tick(float DeltaTime)
@@ -115,4 +116,38 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 bool AMyCharacter::MoveToTarget(UAction *Action)
 {
 	return PlayerAI->MoveToTarget(this, Action);
+}
+
+
+void AMyCharacter::DecreaseHunger()
+{
+	if (Hunger == 0)
+		Die();
+	Hunger--;
+}
+
+void AMyCharacter::IncreaseHunger()
+{
+	Hunger = FMath::Clamp(Hunger += 1, 0, 100);
+}
+
+void AMyCharacter::Die()
+{	
+	PlayerAI->UnPossess();
+	PlayerAI = nullptr;
+
+	GetWorldTimerManager().ClearTimer(HungerTimerHandle);
+	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+	GetMesh()->SetAllBodiesSimulatePhysics(true);
+	GetCapsuleComponent()->SetWorldLocation(FVector::ZeroVector);
+	GetCapsuleComponent()->SetWorldRotation(FRotator(90.0f, 0.0f, 0.0f));
+
+
+	FTimerHandle Handle;
+	GetWorldTimerManager().SetTimer(Handle, this, &AMyCharacter::DestroyChar, 5.0f, false);
+}
+
+void AMyCharacter::DestroyChar()
+{
+	this->Destroy();
 }

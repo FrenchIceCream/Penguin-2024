@@ -25,6 +25,13 @@ UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+	void DecreaseHunger();
+	void IncreaseHunger();
+	void Die();
+	void DestroyChar();
+
+	FTimerHandle HungerTimerHandle;
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -84,8 +91,10 @@ protected:
 
 	UCharAnimInstance* AnimInst;
 
+	UPROPERTY()
 	TSet<UAction*> Actions;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Hunger = 100;
 
 	UPROPERTY()

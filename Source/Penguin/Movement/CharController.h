@@ -15,6 +15,5 @@ class PENGUIN_API ACharController : public AAIController
 public:
 	bool MoveToTarget(APawn *Agent, UAction *Action);
 	
-	
 	void CheckIfAIWorks();
 };
