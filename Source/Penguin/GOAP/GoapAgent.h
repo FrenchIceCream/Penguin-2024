@@ -15,11 +15,16 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PENGUIN_API UGoapAgent : public UActorComponent
 {
 	GENERATED_BODY()
-
+	
+	UPROPERTY()
 	TSet<UAction*> AvailableActions;
+	UPROPERTY()
 	TArray<UAction*> CurrentActions;
+	UPROPERTY()
 	AMyCharacter* Agent;
+	UPROPERTY()
 	UGoalPlanner* Planner;
+	UPROPERTY()
 	UFSM* FSM;
 
 	bool HasActionPlan() {return !CurrentActions.IsEmpty();}

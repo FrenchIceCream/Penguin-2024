@@ -36,7 +36,7 @@ void UGoapAgent::BeginPlay()
 	auto actions = Agent->GetActions();
 	for (auto action : actions)
 		AddAction(action);
-	
+
 	FSM = NewObject<UFSM>();
 
 	auto state = NewObject<UIdleState>();

@@ -14,7 +14,8 @@ UCLASS()
 class PENGUIN_API UFSM : public UObject
 {
 	GENERATED_BODY()
-
+	
+	UPROPERTY()
 	TArray<IState*> Stack;
 public:	
 	// Sets default values for this actor's properties

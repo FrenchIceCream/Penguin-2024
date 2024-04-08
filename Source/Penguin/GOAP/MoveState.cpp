@@ -10,7 +10,8 @@
 #include "GoalPlanner.h"
 #include "IdleState.h"
 
-void UMoveState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Planner, AMyCharacter *agent)
+
+void UMoveState::PerformState(UGoapAgent *GoapAgent, UFSM *fsm, UGoalPlanner *Planner, AMyCharacter *agent)
 {
     UE_LOG(LogTemp, Warning, TEXT("UMoveState: Performing state"));
 

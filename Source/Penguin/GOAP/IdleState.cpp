@@ -25,10 +25,4 @@ void UIdleState::PerformState(UGoapAgent* GoapAgent, UFSM* fsm, UGoalPlanner* Pl
         auto state = NewObject<UPerformActionState>();
         fsm->PushState(state);
     }
-    else
-    {
-        fsm->PopState();
-        auto state = NewObject<UIdleState>();
-        fsm->PushState(state);
-    }
 }

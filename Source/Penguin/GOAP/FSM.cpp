@@ -5,15 +5,12 @@
 // Sets default values
 UFSM::UFSM()
 {
-	Stack = TArray<IState*>();
 }
 
 void UFSM::StateTick(UGoapAgent* GoapAgent, UGoalPlanner* Planner, AMyCharacter *Agent)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Ticking FSM StateTick"));
 	if (!Stack.IsEmpty())
-	{
 		if (IState* state = Cast<IState>(Stack.Top()))
 			state->PerformState(GoapAgent, this, Planner, Agent);
-	}
 }
