@@ -16,6 +16,8 @@
 #include "GOAP/GoalPlanner.h"
 #include "GOAP/GoapAgent.h"
 #include "Movement/CharController.h"
+#include "Components/Widget.h"
+//#include "UI/ThoughtBubble.h"
 //=Actions=//
 #include "GOAP/Action_Test.h"
 
@@ -56,6 +58,8 @@ AMyCharacter::AMyCharacter()
 
 	GoalPlanner = CreateDefaultSubobject<UGoalPlanner>(TEXT("GoalPlanner"));
 	GoapAgent = CreateDefaultSubobject<UGoapAgent>(TEXT("GoapAgent"));
+
+	//BubbleWidgetComponent = CreateWidget<UThoughtBubble>(GetWorld(), UThoughtBubble::StaticClass());
 }
 
 // Called when the game starts or when spawned
@@ -71,11 +75,20 @@ void AMyCharacter::BeginPlay()
 	PlayerAI = GetWorld()->SpawnActor<ACharController>(ACharController::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
 	PlayerAI->Possess(this);
 
-	GoapAgent->AddAction(NewObject<UAction_Test>());
+	//GoapAgent->AddAction(NewObject<UAction_Test>());
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketTransform(RightSocketName).GetLocation().X, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Y, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Z);
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketLocation(LeftSocketName).X, GetMesh()->GetSocketLocation(LeftSocketName).Y, GetMesh()->GetSocketLocation(LeftSocketName).Z);
+	AddActions();
 
 	GetWorldTimerManager().SetTimer(HungerTimerHandle, this, &AMyCharacter::DecreaseHunger, 1, true);
+}
+
+void AMyCharacter::AddActions()
+{
+	for (TSubclassOf<UAction> ActionClass : ActionsToAdd)
+	{
+		GoapAgent->AddAction(NewObject<UAction>(this, ActionClass));
+	}
 }
 
 void AMyCharacter::Tick(float DeltaTime)
@@ -107,8 +120,11 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 
 	if (Testing)
 		res.Add("DoneTesting", true);
-	else
-		res.Add("GetFood", Hunger < 20);
+	else if (Hunger < 20)
+	{
+		//UE_LOG(LogTemp, Error, TEXT("Inside GetGoal"));
+		res.Add("GetFood", true);
+	}
 
     return res;
 }

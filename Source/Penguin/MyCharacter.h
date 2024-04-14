@@ -8,6 +8,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Controller.h"
+#include "Blueprint/UserWidget.h"
 
 #include "MyCharacter.generated.h"
 
@@ -20,6 +21,8 @@ class UAction;
 class UGoalPlanner;
 class ACharController;
 class UGoapAgent;
+//class UWidgetComponent;
+//class UThoughtBubble;
 
 UCLASS()
 class PENGUIN_API AMyCharacter : public ACharacter
@@ -30,8 +33,10 @@ class PENGUIN_API AMyCharacter : public ACharacter
 	void IncreaseHunger();
 	void Die();
 	void DestroyChar();
+	void AddActions();
 
 	FTimerHandle HungerTimerHandle;
+
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -48,26 +53,34 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI") 
     	UGoapAgent* GoapAgent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
 		ULegManager* LegManager;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
 		UFootComp* LeftFoot;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
 		UFootComp* RightFoot;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation Sockets")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation|Animation Sockets")
 		FName LeftSocketName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation Sockets")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation|Animation Sockets")
 		FName RightSocketName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Speed")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation|Character Speed")
 	float WalkingSpeed = 30;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Speed")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation|Character Speed")
 	float SprintSpeed = 50;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GOAP|Actions")
+	TArray<TSubclassOf<UAction>> ActionsToAdd;
+	// UPROPERTY()
+	// UThoughtBubble* BubbleWidgetComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GOAP")
+	bool Testing = false;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -81,9 +94,6 @@ public:
 	virtual TMap<FString, bool> GetGoal();
 
 	bool MoveToTarget(UAction* Action);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GOAP")
-	bool Testing = false;
 
 protected:
 	// Called when the game starts or when spawned
