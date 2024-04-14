@@ -7,7 +7,7 @@
 TMap<FString, bool> AFisherman::GetWorldState()
 {
     TMap<FString, bool> res = TMap<FString, bool>();
-	res.Add("HasFish", FishCount > 0);
+	res.Add("NeedsFish", FishCount < 5);
 
     if (Testing)
 		res.Add("Testing", true);
@@ -26,9 +26,14 @@ TMap<FString, bool> AFisherman::GetGoal()
 		//UE_LOG(LogTemp, Error, TEXT("Inside GetGoal"));
 		res.Add("GetFood", true);
 	}
-
-    else if (FishCount == 0)
-        res.Add("CatchFish", true);
+    else if (FishCount == 5)
+	{
+		res.Add("BringFishToBuilding", true);
+	}
+	else
+	{
+		res.Add("HasFish", true);
+	}
     
 
     return res;

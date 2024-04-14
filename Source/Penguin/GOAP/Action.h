@@ -14,14 +14,18 @@ class PENGUIN_API UAction : public UObject
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY()
 	TMap<FString, bool> Preconditions;
+	UPROPERTY()
 	TMap<FString, bool> Effects;
-
+	UPROPERTY()
 	bool InRange = false;
 public:
 	UAction();
 
+	UPROPERTY()
 	float ActionCost = 1.0f;
+	UPROPERTY()
 	AActor *Target;
 
 	virtual bool CheckProceduralPrecondition(AMyCharacter* Agent) {	UE_LOG(LogTemp, Error, TEXT("CheckProceduralPrecondition: must be overriden")); return false;	}
