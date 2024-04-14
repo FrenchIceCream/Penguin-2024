@@ -34,6 +34,7 @@ void ABuilding::Init(UBuildingDataAsset *BuildingDataAsset, const EBuildState Ne
 
 	BuildingState = NewBuildingState;
 	BuildingData = BuildingDataAsset;
+	BuildingType = BuildingDataAsset->BuildingType;
 
 	if (BuildingState == EBuildState::InProgress)
 	{
@@ -43,6 +44,20 @@ void ABuilding::Init(UBuildingDataAsset *BuildingDataAsset, const EBuildState Ne
 	{
 		InitBuildPreview();
 	}
+}
+
+void ABuilding::RemoveOverlayMaterial()
+{
+	if (!BuildingData)
+		return;
+	
+	if (OverlayMaterial)
+		{
+			TArray<UStaticMeshComponent*> Components;
+			GetComponents<UStaticMeshComponent>(Components);
+			for (int i = 0; i < Components.Num(); i++)
+				Components[i]->SetOverlayMaterial(nullptr);
+		}
 }
 
 void ABuilding::UpdateOverlayMaterial(const bool CanPlace) const
@@ -125,7 +140,6 @@ void ABuilding::SetOverlayMaterial()
 				Components[i]->SetOverlayMaterial(OverlayMaterial);
 		}
 	}
-
 }
 
 void ABuilding::UpdateBuildProgressionMesh()

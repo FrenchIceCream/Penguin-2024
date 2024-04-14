@@ -30,7 +30,7 @@ void UBuildingModeComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		return;
 	
 	const FVector MouseLocationOnTerrain = PlayerController->GetMouseLocationOnTerrain();
-	if (CurrentBuilding->GetActorLocation() != MouseLocationOnTerrain)
+	if (CurrentBuilding->BuildingState != EBuildState::InProgress && CurrentBuilding->GetActorLocation() != MouseLocationOnTerrain)
 		CurrentBuilding->SetActorLocation(MouseLocationOnTerrain);
 		
 	UpdatePlacementStatus();
@@ -74,6 +74,10 @@ void UBuildingModeComponent::UpdatePlacementStatus()
 
 	TArray<AActor*> OverlappingActors;
 	CurrentBuilding->GetOverlappingActors(OverlappingActors);
+
+	// for (auto actor : OverlappingActors)
+	// 	UE_LOG(LogTemp, Error, TEXT("OverlappingActors: %s"), *actor->GetName());
+
 	IsPlacable = OverlappingActors.Num() == 0;
 	CurrentBuilding->UpdateOverlayMaterial(IsPlacable);
 }
@@ -90,7 +94,7 @@ void UBuildingModeComponent::EnterBuildMode()
 	{
 		PlaceBuilding(CurrentBuilding->GetBuildingData(), CurrentBuilding->GetTransform());
 		//TODO TODO TODO вот тут какой-то прикол  при раскомментировании прогрузка меша не работает
-		//ExitBuildMode();
+		ExitBuildMode();
 	}
 }
 
@@ -121,11 +125,13 @@ void UBuildingModeComponent::ExitBuildMode()
 	if (!PlayerController)
 		return;
 
-	//TODO AddInput
 	PlayerPawn->SetInputBuildingMode(false);
 
 	if (CurrentBuilding)
+	{
 		CurrentBuilding->Destroy();
+		UE_LOG(LogTemp, Warning, TEXT("Destroyed Building"));
+	}
 }
 
 
@@ -139,11 +145,19 @@ void UBuildingModeComponent::PlaceBuilding(UBuildingDataAsset *BuildingDataAsset
 
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+	//TODO добавил это
+	 if (APengGameState* GameState = Cast<APengGameState>(UGameplayStatics::GetGameState(World)))
+	 	GameState->AddPlacedObject(FWorldSelectableData(CurrentBuilding));
+	CurrentBuilding->RemoveOverlayMaterial();
+	//
+
 	CurrentBuilding = World->SpawnActor<ABuilding>(BuildingDataAsset->BuildingClass.LoadSynchronous(), Position, SpawnParameters);
 	if (CurrentBuilding)
 	{
 		CurrentBuilding->Init(BuildingDataAsset, EBuildState::InProgress);
 		CurrentBuilding->OnBuildingBuiltEvent.AddDynamic(this, &UBuildingModeComponent::OnBuildComplete);
+		//BuildingQueue.Enqueue(CurrentBuilding);
 	}
 }
 
@@ -174,14 +188,20 @@ void UBuildingModeComponent::OnBuildComplete(const EBuildState NewBuildingState)
 	if (!CurrentBuilding)
 		return;
 
-	if (NewBuildingState == EBuildState::Built)
-	{
+	// if (NewBuildingState == EBuildState::Built)
+	// {
 		PlaceBuildingInWorld(CurrentBuilding->GetBuildingData(), CurrentBuilding->GetTransform());
-	}
-	else
-	{
-		CurrentBuilding->Destroy();
-	}
+		//BuildingQueue.Dequeue();
+	// }
+	// else
+	// {
+	// 	//CurrentBuilding->Destroy();
+	// 	//TODO TODO TODO
+	// 	ExitBuildMode();
+	// }
+
+	// if (BuildingQueue.IsEmpty())
+	// 	ExitBuildMode();	
 }
 
 

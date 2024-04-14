@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "BuildingType.h"
 #include "BuildingDataAsset.generated.h"
 
 /**
@@ -23,6 +24,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Data Settings")
 	FPrimaryAssetType DataType;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Data Settings")
+	EBuildingType BuildingType;
 
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override { return FPrimaryAssetId(DataType, GetFName()); }
 

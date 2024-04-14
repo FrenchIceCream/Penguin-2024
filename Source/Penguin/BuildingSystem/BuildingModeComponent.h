@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Building.h"
 #include "Engine/AssetManager.h"
+#include "Containers/Queue.h"
 #include "BuildingModeComponent.generated.h"
 
 
@@ -71,4 +72,7 @@ protected:
 
 	UPROPERTY()
 	bool IsPlacable = false;
+
+	// UPROPERTY()
+	// TQueue<ABuilding*> BuildingQueue;
 };

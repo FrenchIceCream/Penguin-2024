@@ -57,6 +57,8 @@ public:
 
 	void Init(UBuildingDataAsset * BuildingDataAsset, const EBuildState NewBuildingState = EBuildState::NotBuilt);
 
+	void RemoveOverlayMaterial();
+
 	UBuildingDataAsset* GetBuildingData() const { return BuildingData; }
 	void UpdateOverlayMaterial(const bool CanPlace = true) const;
 
