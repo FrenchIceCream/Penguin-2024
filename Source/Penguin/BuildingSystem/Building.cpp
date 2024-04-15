@@ -22,6 +22,15 @@ ABuilding::ABuilding()
 	Entrance->SetupAttachment(RootComponent);
 }
 
+void ABuilding::AddActorComponents(TArray<TSoftClassPtr<UActorComponent>> CompClasses)
+{
+	for (auto CompClass : CompClasses)
+	{
+		UActorComponent * Comp = AddComponentByClass(CompClass.LoadSynchronous(), false, FTransform(FVector(0,0,0)), true);
+		FinishAddComponent(Comp, false, FTransform(FVector(0,0,0)));
+	}
+}
+
 void ABuilding::BeginPlay()
 {
 	Super::BeginPlay();
@@ -35,6 +44,7 @@ void ABuilding::Init(UBuildingDataAsset *BuildingDataAsset, const EBuildState Ne
 	BuildingState = NewBuildingState;
 	BuildingData = BuildingDataAsset;
 	BuildingType = BuildingDataAsset->BuildingType;
+	AddActorComponents(BuildingDataAsset->ComponentsToAdd);
 
 	if (BuildingState == EBuildState::InProgress)
 	{

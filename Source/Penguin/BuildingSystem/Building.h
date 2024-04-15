@@ -63,6 +63,8 @@ public:
 	void UpdateOverlayMaterial(const bool CanPlace = true) const;
 
 	FOnBuildingBuiltEvent OnBuildingBuiltEvent;
+
+	void AddActorComponents(TArray<TSoftClassPtr<UActorComponent>> CompClasses);
 protected:
 	virtual void BeginPlay() override;
 

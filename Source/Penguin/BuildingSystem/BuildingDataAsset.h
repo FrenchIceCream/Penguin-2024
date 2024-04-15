@@ -7,9 +7,6 @@
 #include "BuildingType.h"
 #include "BuildingDataAsset.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class PENGUIN_API UBuildingDataAsset : public UPrimaryDataAsset
 {
@@ -29,6 +26,9 @@ public:
 	EBuildingType BuildingType;
 
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override { return FPrimaryAssetId(DataType, GetFName()); }
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classes")
+	TArray<TSoftClassPtr<UActorComponent>> ComponentsToAdd;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classes")
 	TSoftClassPtr<AActor> BuildingClass;
