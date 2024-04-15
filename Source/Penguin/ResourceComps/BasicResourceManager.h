@@ -12,7 +12,7 @@ class PENGUIN_API UBasicResourceManager : public UActorComponent
 {
 	GENERATED_BODY()
 
-	int ResourceCount;
+	int ResourceCount = 0;
 
 	int MinResourceCount = 0;
 	int MaxResourceCount = 10;
@@ -29,6 +29,8 @@ public:
 
 	void AddResource(int count) { ResourceCount += count; }
 	void AddResource() { ResourceCount ++; }
+	void SubtractResource(int count) { ResourceCount -= count; }
+	void SubtractResource() { ResourceCount --; }
 
 protected:
 	virtual void BeginPlay() override;

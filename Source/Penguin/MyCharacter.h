@@ -96,6 +96,7 @@ public:
 	bool MoveToTarget(UAction* Action);
 
 	int GetHunger() {return Hunger;};
+	void SatisfyHunger(int Amount) {Hunger += Amount;};
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

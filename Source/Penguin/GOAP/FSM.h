@@ -16,13 +16,13 @@ class PENGUIN_API UFSM : public UObject
 	GENERATED_BODY()
 	
 	UPROPERTY()
-	TArray<IState*> Stack;
+	TArray<UObject*> Stack;
 public:	
 	// Sets default values for this actor's properties
 	UFSM();
 
 	void StateTick(UGoapAgent* GoapAgent, UGoalPlanner* Planner, AMyCharacter* Agent);
 
-	void PushState(IState* state) {Stack.Push(state);}
+	void PushState(UObject* state) {Stack.Push(state);}
 	void PopState() {Stack.Pop();}
 };

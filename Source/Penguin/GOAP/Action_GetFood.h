@@ -11,4 +11,27 @@ class PENGUIN_API UAction_GetFood : public UAction
 {
 	GENERATED_BODY()
 	
+	UPROPERTY()
+	bool IsActionDone = false;
+
+	UPROPERTY()
+	FTimerHandle TimerHandle;
+	FTimerDelegate TimerDelegate;
+public:
+	UAction_GetFood();
+
+	bool CheckProceduralPrecondition(AMyCharacter* Agent) override;
+	bool Perform(AMyCharacter* Agent) override;
+	void Reset() override;
+	
+	bool RequiresInRange() override {	return true;	}
+	bool IsDone() override;
+
+	UFUNCTION()
+	void AddFood(AMyCharacter * Agent);
+
+	FVector GetTargetLocation() override 
+	{
+		return Target->GetActorLocation() + FVector(0,5,0);
+	}
 };
