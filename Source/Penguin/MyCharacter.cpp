@@ -16,7 +16,8 @@
 #include "GOAP/GoalPlanner.h"
 #include "GOAP/GoapAgent.h"
 #include "Movement/CharController.h"
-#include "Components/Widget.h"
+#include "Components/WidgetComponent.h"
+#include "UI/StatsBar.h"
 //#include "UI/ThoughtBubble.h"
 //=Actions=//
 #include "GOAP/Action_Test.h"
@@ -59,7 +60,8 @@ AMyCharacter::AMyCharacter()
 	GoalPlanner = CreateDefaultSubobject<UGoalPlanner>(TEXT("GoalPlanner"));
 	GoapAgent = CreateDefaultSubobject<UGoapAgent>(TEXT("GoapAgent"));
 
-	//BubbleWidgetComponent = CreateWidget<UThoughtBubble>(GetWorld(), UThoughtBubble::StaticClass());
+	StatsBarWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("StatsBar"));
+	StatsBarWidgetComp->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -75,12 +77,14 @@ void AMyCharacter::BeginPlay()
 	PlayerAI = GetWorld()->SpawnActor<ACharController>(ACharController::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
 	PlayerAI->Possess(this);
 
-	//GoapAgent->AddAction(NewObject<UAction_Test>());
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketTransform(RightSocketName).GetLocation().X, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Y, GetMesh()->GetSocketTransform(RightSocketName).GetLocation().Z);
 	// UE_LOG(LogTemp, Warning, TEXT("%f:%f:%f"), GetMesh()->GetSocketLocation(LeftSocketName).X, GetMesh()->GetSocketLocation(LeftSocketName).Y, GetMesh()->GetSocketLocation(LeftSocketName).Z);
 	AddActions();
 
 	GetWorldTimerManager().SetTimer(HungerTimerHandle, this, &AMyCharacter::DecreaseHunger, 1, true);
+
+	UStatsBar *StatsBar = Cast<UStatsBar>(StatsBarWidgetComp->GetUserWidgetObject());
+	StatsBar->SetOwnerChar(this);
 }
 
 void AMyCharacter::AddActions()

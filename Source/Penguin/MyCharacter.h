@@ -21,7 +21,7 @@ class UAction;
 class UGoalPlanner;
 class ACharController;
 class UGoapAgent;
-//class UWidgetComponent;
+class UWidgetComponent;
 //class UThoughtBubble;
 
 UCLASS()
@@ -95,6 +95,7 @@ public:
 
 	bool MoveToTarget(UAction* Action);
 
+	int GetHunger() {return Hunger;};
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -106,6 +107,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Hunger = 100;
+
+	UPROPERTY(VisibleAnywhere)
+	UWidgetComponent* StatsBarWidgetComp;
 
 	UPROPERTY()
 	ACharController* PlayerAI;
