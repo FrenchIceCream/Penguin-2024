@@ -3,6 +3,7 @@
 #include "Building.h"
 #include "Components/BoxComponent.h"
 #include "BuildingDataAsset.h"
+#include "NavModifierComponent.h"
 
 // Sets default values
 ABuilding::ABuilding()
@@ -17,13 +18,13 @@ ABuilding::ABuilding()
 	StaticMeshComp->SetupAttachment(RootComponent);
 	StaticMeshComp->SetCollisionProfileName("OverlapAll");
 
-	//TODO вынести в дата ассет
-	Entrance = CreateDefaultSubobject<USceneComponent>(TEXT("EntrancePosition"));
-	Entrance->SetupAttachment(RootComponent);
+	CreateDefaultSubobject<UNavModifierComponent>(TEXT("NavModifierComp"));
 }
 
 void ABuilding::AddActorComponents(TArray<TSoftClassPtr<UActorComponent>> CompClasses)
 {
+	 //* NavComp = AddComponentByClass(UNavModifierComponent::StaticClass(), false, FTransform(FVector(0,0,0)), true);
+	//FinishAddComponent(NavComp, false, FTransform(FVector(0,0,0)));
 	for (auto CompClass : CompClasses)
 	{
 		UActorComponent * Comp = AddComponentByClass(CompClass.LoadSynchronous(), false, FTransform(FVector(0,0,0)), true);

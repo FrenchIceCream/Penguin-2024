@@ -9,11 +9,12 @@ bool ACharController::MoveToTarget(APawn *Agent, UAction *Action)
 {
     if (!IsValid(Agent) || !IsValid(Action))
         return false;
-    MoveToLocation(Action->GetTargetLocation(), -1, false, false, false, true);
+    MoveToLocation(Action->GetTargetLocation(), -1, false, true, false, true);
 
     //UE_LOG(LogTemp, Warning, TEXT("Distance: %f"), FVector::Distance(Agent->GetActorLocation(), Action->GetTargetLocation()));
 
-    if (FVector::Distance(Agent->GetActorLocation(), Action->GetTargetLocation()) < 100)
+    if (FVector::Distance(Agent->GetActorLocation(), 
+        Action->GetTargetLocation()) < 100)
     {
         Action->SetInRange(true);
         return true;

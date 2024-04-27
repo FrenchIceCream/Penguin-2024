@@ -30,8 +30,9 @@ TMap<FString, bool> AFisherman::GetGoal()
     else if (FishCount == 5)
 	{
 		res.Add("BringFishToBuilding", true);
-	}	
-	res.Add("HasFish", true);
+	}
+	else
+		res.Add("HasFish", true);
 
     return res;
 }

@@ -38,6 +38,6 @@ public:
 	{
 		FVector Origin, BoxExtent;
 		Target->GetActorBounds(true, Origin, BoxExtent);
-		return Origin + (BoxExtent - FVector(100, 100, 100)) * (-Target->GetActorRightVector());
+		return Origin + (BoxExtent + FVector(100, 100, 100)) * (-Target->GetActorRightVector());
 	};
 };

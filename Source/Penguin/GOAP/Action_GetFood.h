@@ -32,6 +32,8 @@ public:
 
 	FVector GetTargetLocation() override 
 	{
-		return Target->GetActorLocation() + FVector(0,5,0);
+		FVector Origin, BoxExtent;
+		Target->GetActorBounds(true, Origin, BoxExtent);
+		return Origin + (BoxExtent + FVector(100, 100, 100)) * (-Target->GetActorRightVector());
 	}
 };

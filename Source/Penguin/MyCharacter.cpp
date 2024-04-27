@@ -135,6 +135,9 @@ TMap<FString, bool> AMyCharacter::GetGoal()
 
 bool AMyCharacter::MoveToTarget(UAction *Action)
 {
+	if (Hunger <= 1)
+	return true; 
+	
 	return PlayerAI->MoveToTarget(this, Action);
 }
 
