@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Action.h"
+#include "DrawDebugHelpers.h"
 #include "Action_Fishing.generated.h"
 
 UCLASS()
@@ -35,8 +36,8 @@ public:
 
 	FVector GetTargetLocation() override 
 	{
-		// FVector MinMeshBounds, MaxMeshBounds;
-		// Target->GetActorBounds(true, MinMeshBounds, MaxMeshBounds);
-		return Target->GetActorLocation() + FVector(0,5,0);
+		FVector Origin, BoxExtent;
+		Target->GetActorBounds(true, Origin, BoxExtent);
+		return Origin + (BoxExtent - FVector(100, 100, 100)) * (-Target->GetActorRightVector());
 	};
 };

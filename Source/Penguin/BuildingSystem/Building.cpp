@@ -121,6 +121,7 @@ void ABuilding::UpdateCollider()
 	
 	FVector MinMeshBounds, MaxMeshBounds;
 	StaticMeshComp->GetLocalBounds(MinMeshBounds, MaxMeshBounds);
+	//DrawDebugBox(GetWorld(), GetActorLocation(), MaxMeshBounds, FColor::Red, true, -1, 0, 5);
 
 	BoxCollider->SetBoxExtent(FVector
 	(

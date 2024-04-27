@@ -44,7 +44,7 @@ bool UAction_Fishing::CheckProceduralPrecondition(AMyCharacter* Agent)
             }
         }
     }
-    UE_LOG(LogTemp, Error, TEXT("%d"), Target != nullptr);
+    //UE_LOG(LogTemp, Error, TEXT("%d"), Target != nullptr);
     return Target != nullptr;
 }
 

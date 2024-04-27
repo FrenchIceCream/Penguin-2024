@@ -6,12 +6,9 @@
 #include "Action.h"
 #include "Action_BringFood.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class PENGUIN_API UAction_BringFood : public UAction
 {
 	GENERATED_BODY()
-	
 };
