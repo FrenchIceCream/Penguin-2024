@@ -16,21 +16,16 @@ class PENGUIN_API UGoalPlanner : public UActorComponent
 	UPROPERTY()
 	TSet<UAction*> Actions;
 
-	//TQueue<UAction*>* ActionSequence;
-
 	bool BuildGraph(FGoapNode* parent, TArray<FGoapNode*>& leaves, TSet<UAction*> usableActions, TMap<FString, bool> goal);
 	bool InState(TMap<FString, bool> test, TMap<FString, bool> state);
 	TMap<FString, bool> PopulateState(TMap<FString, bool> currentState, TMap<FString, bool> stateChange);
 	TSet<UAction*> GetActionSubset(TSet<UAction*> actions, UAction* actionToRemove);
 public:	
-	// Sets default values for this component's properties
 	UGoalPlanner();
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	TArray<UAction*> FindBestPath(AMyCharacter* Agent, TSet<UAction*> AvailableActions, TMap<FString, bool> WorldState, TMap<FString, bool> Goal);
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 };
 

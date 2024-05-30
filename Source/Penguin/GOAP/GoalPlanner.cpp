@@ -107,7 +107,7 @@ TSet<UAction *> UGoalPlanner::GetActionSubset(TSet<UAction *> actions, UAction *
 {
 	TSet<UAction *> Subset = TSet<UAction *>();
 	for (UAction* Action : actions)
-		if (Action != actionToRemove)	//TODO вот это подозрительно
+		if (Action != actionToRemove)
 			Subset.Add(Action);
     
 	return Subset;
